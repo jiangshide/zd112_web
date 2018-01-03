@@ -1,0 +1,131 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: white;
+    font-weight: 500;
+    font-family: "Microsoft YaHei", "宋体", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif, FreeSans, Arimo;
+}
+
+#logo {
+    padding-left: 70%;
+    font-size: 30px;
+    color: white;
+}
+
+#btn {
+    font-size: 20px;
+    color: white;
+}
+
+.search form {
+    background: white;
+    width: 300px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.search input, .search button {
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+.search input {
+    width: 300px;
+    height: 30px;
+    padding-left: 13px;
+    background: white;
+}
+
+.search button {
+    top: 0;
+    right: 0;
+    height: 42px;
+    width: 42px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.search button:before {
+    content: "\f002";
+    font-family: FontAwesome;
+    font-size: 16px;
+    border: 1px;
+    color: gray;
+}
+
+.navmenu {
+    text-align: right;
+    background: #67120E;
+    font: bold 20px/30px sans-serif;
+}
+
+.navmenu ul, .navmenu li {
+    margin: 0;
+    padding: 0;
+}
+
+.navmenu ul {
+    background: gray;
+    list-style: none;
+}
+
+.navmenu li {
+    float: left;
+    position: relative;
+    width: 14%;
+    margin-right: 2px;
+}
+
+.navmenu a {
+    background: #67120E;
+    color: #FFFFFF;
+    display: block;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    -webkit-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    -ms-transition: all .25s ease;
+    -o-transition: all .25s ease;
+    transition: all .25s ease;
+}
+
+.navmenu li:hover a {
+    background: white;
+    color: #67120E;
+}
+
+#navmenulist {
+    left: 0;
+    margin-right: 100px;
+    opacity: 0;
+    width: 100px;
+    position: absolute;
+    top: 35px;
+    visibility: hidden;
+    z-index: 1;
+}
+
+li:hover ul#navmenulist {
+    opacity: 1;
+    top: 40px;
+    visibility: visible;
+}
+
+#navmenulist li {
+    float: none;
+    width: 100%;
+}
+
+#navmenulist a:hover {
+    background: #DF4B05;
+}
+
+#navmenulist a {
+    background-color: white;
+}

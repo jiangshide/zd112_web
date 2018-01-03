@@ -1,0 +1,106 @@
+{{template "comm/head.html" .}}
+<div class="layui-row">
+    <div class="layui-row" style="background: #861B14;">
+        <div class="layui-col-md4">
+            <a href="/" id="logo">Logo</a>
+        </div>
+        <div class="layui-col-md4" style="padding: 7px;">
+            <div class="search">
+                <form>
+                    <input type="text" placeholder="请输入您要搜索的内容...">
+                    <button type="submit"></button>
+                </form>
+            </div>
+        </div>
+        <div class="layui-col-md4" style="padding: 8px;">
+            <a href="/user/login" id="btn">登录</a><span id="btn">  |  </span><a href="/user/reg" id="btn">注册</a>
+            <i class="fa fa-soundcloud" style="font-size: 30px;color: white;margin-left: 30px;"></i>
+        </div>
+    </div>
+    <div class="layui-row" style="background: #67120E;margin-bottom: 10px;">
+        <ul class="navmenu" style="width: 70%;margin-left: 15%;margin-right: 15%;">
+            <li><a href="/">首页</a></li>
+            <li>
+                <a href="/university">学府</a>
+                <ul id="navmenulist">
+                    <li><a href="/university">诗词</a></li>
+                    <li><a href="/university">史书典籍</a></li>
+                    <li><a href="/university">诗词周边</a></li>
+                    <li><a href="/university">美文阅读</a></li>
+                    <li><a href="/university">书法欣赏</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/">民族</a>
+                <ul id="navmenulist">
+                    <li><a href="/">汉族</a></li>
+                    <li><a href="/">苗族</a></li>
+                    <li><a href="/">壮族</a></li>
+                </ul>
+            </li>
+            <li><a href="/">音乐</a></li>
+            <li><a href="/">视频</a></li>
+            <li><a href="/">原创</a></li>
+            <li><a href="/">题库</a></li>
+        </ul>
+    {{/*<div class="layui-row navmenu" style="text-align: center;padding: 5px;">*/}}
+    {{/*<div class="layui-col-lg1" style="margin-left: 21%;">*/}}
+    {{/*<a href="/">首页</a>*/}}
+    {{/*</div>*/}}
+    {{/*<div class="layui-col-lg1">*/}}
+    {{/*<li><a href="/">学府</a></li>*/}}
+    {{/*<ul id="university">*/}}
+    {{/*<li><a href="/">诗词</a></li>*/}}
+    {{/*<li><a href="/">史书典籍</a></li>*/}}
+    {{/*<li><a href="/">诗词周边</a></li>*/}}
+    {{/*<li><a href="/">美文阅读</a></li>*/}}
+    {{/*<li><a href="/">书法欣赏</a></li>*/}}
+    {{/*</ul>*/}}
+    {{/*</div>*/}}
+    {{/*<div class="layui-col-lg1">*/}}
+    {{/*<a href="/">民族</a>*/}}
+    {{/*</div>*/}}
+    {{/*<div class="layui-col-lg1">*/}}
+    {{/*<a href="/">音乐</a>*/}}
+    {{/*</div>*/}}
+    {{/*<div class="layui-col-lg1">*/}}
+    {{/*<a href="/">视频</a>*/}}
+    {{/*</div>*/}}
+    {{/*<div class="layui-col-lg1">*/}}
+    {{/*<a href="/">原创</a>*/}}
+    {{/*</div>*/}}
+    {{/*<div class="layui-col-lg1">*/}}
+    {{/*<a href="/">题库</a>*/}}
+    {{/*</div>*/}}
+    {{/*</div>*/}}
+    </div>
+    <div style="width: 70%;margin-left: 15%;margin-right: 15%;">
+        <div>
+        {{template "comm/banner.html" .}}
+        </div>
+        <div class="layui-row" style="height: 150px;margin-top: 10px;">
+            <div class="layui-col-xs3" style="background: #2D93CA;text-align:center;height: 100%;padding-right: 10px;">
+                <div style="height: 100%;background: antiquewhite;text-align:center;padding-top: 100px;font-size: 20px;color: white;">
+                    热门活动
+                </div>
+            </div>
+            <div class="layui-col-xs3" style="background: #2D93CA;text-align: center;height: 100%;padding-right: 5px;">
+                <div style="height: 100%;background: #009f95;padding-top: 100px;font-size: 20px;color: white;">
+                    猜你喜欢
+                </div>
+            </div>
+            <div class="layui-col-xs3" style="background: #2D93CA;text-align: center;height: 100%;padding-left: 5px;">
+                <div style="height: 100%;background:gray;padding-top: 100px;font-size: 20px;color: white;">
+                    每日最新
+                </div>
+            </div>
+            <div class="layui-col-xs3" style="background: #2D93CA;text-align: center;height: 100%;padding-left: 10px;">
+                <div style="height: 100%;background: hotpink;padding-top: 100px;font-size: 20px;color: white;">
+                    每日签到
+                </div>
+            </div>
+        </div>
+    {{template "comm/content.html" .}}
+    </div>
+</div>
+{{template "comm/foot.html" .}}

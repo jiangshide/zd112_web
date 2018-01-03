@@ -1,0 +1,28 @@
+<div>
+    <div class="layui-carousel" id="banner">
+        <div carousel-item>
+            <div><a href="/"><img
+                    src="/static/img/login.jpg"
+                    width="100%;" alt="sss"></a></div>
+            <div><a href="/"><img
+                    src="/static/img/reg.jpg"
+                    width="100%;" alt="sss"></a></div>
+            <div><a href="/"><img
+                    src="/static/img/userface.jpg"
+                    width="100%;" alt="sss"></a></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use('carousel', function () {
+        var carousel = layui.carousel;
+        carousel.render({
+            elem: '#banner'
+            , width: '100%' //设置容器宽度
+
+            // ,arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+        });
+    })
+</script>
