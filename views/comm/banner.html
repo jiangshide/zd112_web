@@ -1,15 +1,11 @@
 <div>
     <div class="layui-carousel" id="banner">
         <div carousel-item>
-            <div><a href="/"><img
-                    src="/static/img/login.jpg"
-                    width="100%;" alt="sss"></a></div>
-            <div><a href="/"><img
-                    src="/static/img/reg.jpg"
-                    width="100%;" alt="sss"></a></div>
-            <div><a href="/"><img
-                    src="/static/img/userface.jpg"
-                    width="100%;" alt="sss"></a></div>
+        {{range .banner}}
+            <div><a href="{{.Link}}"><img
+                    src="http://localhost:8083/{{.Icon}}"
+                    width="100%;" alt="{{.Descript}}"></a></div>
+        {{end}}
         </div>
     </div>
 </div>
@@ -22,7 +18,7 @@
             , width: '100%' //设置容器宽度
 
             // ,arrow: 'always' //始终显示箭头
-            //,anim: 'updown' //切换动画方式
+            // ,anim: 'updown' //切换动画方式
         });
     })
 </script>

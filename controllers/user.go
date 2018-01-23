@@ -24,7 +24,7 @@ func (this *UserController) Login() {
 		user.Name = this.getString("username", "账号不能为空!", DEFAULT_MIN_SIZE)
 		password := this.getString("password", "密码不能为空!", DEFAULT_MIN_SIZE)
 		if err := user.Query(); err != nil {
-			beego.Info("err:",err," | user:",user)
+			beego.Info("err:", err, " | user:", user)
 			this.showTips("该账号不存在!")
 		}
 		if user.Status == 0 {
@@ -79,4 +79,9 @@ func (this *UserController) Reg() {
 		this.redirect("/")
 	}
 	this.display()
+}
+
+func (this *UserController) Logout() {
+	this.Ctx.SetCookie(AUTH, "")
+	this.redirect("/")
 }

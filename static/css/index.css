@@ -11,9 +11,9 @@ body {
 }
 
 .content {
-    width: 70%;
-    margin-left: 15%;
-    margin-right: 15%;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 #logo {
@@ -26,6 +26,13 @@ body {
     color: white;
 }
 
+#scale:hover {
+    transform: scale(1.2);
+    transition: 0.5s;
+    height: 100%;
+    width: 100%;
+}
+
 .search {
     background: white;
     width: 85%;
@@ -33,38 +40,35 @@ body {
 }
 
 .search button {
-    background: url("/static/img/search.png");
+    background-image: url("/static/img/search.png");
     width: 30px;
     height: 16px;
     border: none;
-    border-style: none;
+    background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
     background-repeat: no-repeat;
+    background-size: contain;
 }
 
-.navmenu {
+.nav {
     background: #67120E;
     font: bold 20px/30px sans-serif;
+    margin-left: 8%;
 }
 
-.navmenu ul, .navmenu li {
-    margin: 0;
-    padding: 0;
-}
-
-.navmenu ul {
-    background: gray;
-    list-style: none;
-}
-
-.navmenu li {
+.nav li {
     float: left;
     position: relative;
-    width: 14%;
     margin-right: 2px;
+    background: none;
+    width: 14%;
 }
 
-.navmenu a {
-    background: #67120E;
+.nav a {
+    background: none;
+    /*width: 50%;*/
     color: #FFFFFF;
     display: block;
     padding: 5px 10px;
@@ -77,37 +81,193 @@ body {
     transition: all .25s ease;
 }
 
-.navmenu li:hover a {
-    background: white;
-    color: #67120E;
+#nava {
+    width: 50%;
 }
 
-#navmenulist {
+.nav li:hover a {
+    color: #67120E;
+    background: white;
+}
+
+#navlist {
     left: 0;
-    margin-right: 100px;
     opacity: 0;
-    width: 100px;
+    width: 100%;
+    height: 200px;
+    float: left;
     position: absolute;
-    top: 35px;
+    /*top: 35px;*/
     visibility: hidden;
     z-index: 1;
+    font-size: 16px;
 }
 
-li:hover ul#navmenulist {
+#navlist > div {
+ width: 100%;
+    height: 200px;
+}
+
+.nav li:hover ul#navlist {
     opacity: 1;
     top: 40px;
     visibility: visible;
 }
 
-#navmenulist li {
+.nav > li {
+    position: relative;
+}
+
+#navlist li {
     float: none;
+    text-align: left;
+}
+
+#navlist a:hover {
+    /*background: #861B14;*/
+    color: #861B14;
+    text-align: left;
+}
+
+#navlist a {
+    text-align: left;
+    color: #474849;
+    font-size: 22px;
+    width: 140px;
+}
+
+#navlistItem {
+    top: 0px;
+    left: 175px;
+    opacity: 0;
+    /*width: 100%;*/
+    /*height: 100%;*/
+    float: left;
+    position: absolute;
+    visibility: hidden;
+    z-index: 1;
+    font-size: 16px;
+}
+
+#navlist li:hover ul#navlistItem {
+    opacity: 1;
+    visibility: visible;
+}
+
+/*#navlist > li {*/
+    /*position: relative;*/
+/*}*/
+
+/*#navlistItem li {*/
+    /*float: none;*/
+    /*text-align: left;*/
+/*}*/
+
+#navlistItem a:hover {
+    /*background: #861B14;*/
+    color: #861B14;
+    text-align: left;
+}
+
+#navlistItem a {
+    text-align: left;
+    color: #474849;
+    left: 100%;
+    font-size: 22px;
+}
+
+/*#nation {*/
+/*opacity: 0;*/
+/*float: left;*/
+/*position: absolute;*/
+/*top: 35px;*/
+/*right: -777px;*/
+/*width: 1200px;*/
+/*visibility: hidden;*/
+/*z-index: 1;*/
+/*background: none;*/
+/*font-size: 16px;*/
+/*}*/
+
+/*li:hover ul#nation {*/
+/*opacity: 1;*/
+/*top: 40px;*/
+/*visibility: visible;*/
+/*}*/
+
+/*#nation li {*/
+/*float: left;*/
+/*width: 100%;*/
+/*}*/
+
+/*#nation a:hover {*/
+/*background: #861B14;*/
+/*color: white;*/
+/*}*/
+
+/*#nation a {*/
+/*background-color: white;*/
+/*}*/
+
+.text-desc {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: white;
+    background-color: gray;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    opacity: 0.8;
+    filter: alpha(opacity=50);
+    text-align: center;
+}
+
+.img_tips {
+    float: left;
+    width: 100%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.img_tips .text-desc {
+    top: -100%;
+    transition: 0.5s;
+    color: white;
+}
+
+.img_tips img {
+    transition: 0.5s;
+    height: 200px;
     width: 100%;
 }
 
-#navmenulist a:hover {
-    background: #DF4B05;
+.img_tips:hover img {
+    transform: scale(1.2);
 }
 
-#navmenulist a {
-    background-color: white;
+.img_tips.effect .text-desc {
+    top: auto;
+    bottom: -100%;
+}
+
+.img_tips.effect:hover .text-desc {
+    bottom: 0;
+}
+
+video {
+    border: 1px solid black;
+    padding: 0;
+    margin: 0;
+    width: 700px;
+    height: 500px;
+    background-color: black;
+    margin: auto;
+    display: block;
+}
+
+.universityNav div {
+    float: left;
 }

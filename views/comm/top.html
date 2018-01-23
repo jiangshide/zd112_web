@@ -1,0 +1,44 @@
+<div class="layui-row" style="background: #861B14;">
+    <div class="content">
+        <div class="layui-col-md4">
+            <a href="/" id="logo">Logo</a>
+        </div>
+        <div class="layui-col-md4" style="padding: 7px;">
+            <div class="search" style="padding: 5px;">
+                <form>
+                    <div class="layui-row">
+                        <div class="layui-col-md10">
+                            <input type="text" placeholder="请输入您要搜索的内容..."
+                                   style="text-align: center;border: none;background: none;" autocomplete="off"
+                                   list="fieldTips">
+                            <datalist id="fieldTips">
+                                <option value="Afghanistan 阿富汗">
+                                <option value="Albania 阿尔巴尼亚">
+                                <option value="Algeria 阿尔及利亚">
+                                <option value="Andorra 安道尔共和国">
+                                <option value="Angola 安哥拉">
+                            </datalist>
+                        </div>
+                        <div class="layui-col-md2" style="text-align: right;">
+                            <button type="submit"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="layui-col-md4" style="text-align: right;padding-top: 5px;">
+        {{if .isLogin}}
+            <a href="" id="btn" style="margin-right: 5px;">{{.userName}}</a>
+            <span id="btn"
+                  style="margin-right: 5px;">|</span><a
+                href="/user/logout" id="btn" style="margin-right: 15%;"> 退出</a>
+            <a href="/"><img src="/static/img/app_down.png" class="" width="40" height="25"/></a>
+        {{else}}
+            <a href="/user/login" id="btn" style="margin-right: 5px;">登录</a><span id="btn"
+                                                                                  style="margin-right: 5px;">|</span><a
+                href="/user/reg" id="btn" style="margin-right: 15%;"> 注册</a>
+            <a href="/"><img src="/static/img/app_down.png" class="" width="40" height="25"/></a>
+        {{end}}
+        </div>
+    </div>
+</div>

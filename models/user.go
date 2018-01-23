@@ -15,7 +15,7 @@ type User struct {
 }
 
 func (this *User) TableName() string {
-	return TableName("user")
+	return TableName("permission_user")
 }
 
 func (this *User) Add() (int64, error) {
@@ -31,7 +31,7 @@ func (this *User) Update() (int64, error) {
 }
 
 func (this *User) Query() error {
-	if this.Id != 0 {
+	if this.Id == 0 {
 		return orm.NewOrm().QueryTable(this.TableName()).Filter(Field(this)).One(this)
 	}
 	return orm.NewOrm().Read(this)

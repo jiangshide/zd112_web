@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"github.com/astaxie/beego/orm"
 	"reflect"
-	"zd112/utils"
+	"github.com/jiangshide/GoComm/utils"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -26,7 +26,7 @@ func Init() {
 		dns += "&loc=" + url.QueryEscape(timeZone)
 	}
 	orm.RegisterDataBase("default", "mysql", dns, maxConn, maxIdle)
-	orm.RegisterModel(new(User),new(UserLocation),new(UserProfile))
+	orm.RegisterModel(new(User),new(UserLocation),new(UserProfile),new(Banner),new(Nation))
 	if beego.AppConfig.String("runmode") == "dev" {
 		orm.Debug = true
 	}
