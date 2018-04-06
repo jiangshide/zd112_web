@@ -7,8 +7,8 @@
             <div class="layui-input-block">
                 <label style="text-align: center;margin-top: 20px;font-size: 38px;color: white;">欢迎登录</label>
                 <label style="color: #8D8D8D;">您还没有账号=></label>
-                <button type="reset" class="layui-btn layui-btn-sm layui-btn-radius"><a href="/user/reg"
-                                                                                        style="color: white">注册</a>
+                <button type="reset" class="layui-btn layui-btn-sm layui-btn-danger" style=""><a href="/user/reg"
+                                                                                                 style="color: white">注册</a>
                 </button>
             </div>
         </div>
@@ -18,7 +18,7 @@
                     <label class="layui-form-label">用户名</label>
                     <div class="layui-input-inline">
                         <input type="text" name="username" required lay-verify="required" placeholder="账号|手机号|邮箱"
-                               autocomplete="off" class="layui-input" >
+                               autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-form-mid" style="color: #FD482C">*</div>
                 </div>
@@ -30,9 +30,19 @@
                     </div>
                     <div class="layui-form-mid" style="color: #FD482C">*</div>
                 </div>
+                <div class="layui-row" style="margin-left: 30px;clear: both;">
+                    <div class="layui-col-md5">
+                        <input type="checkbox" lay-skin="primary" name="auto" title="自动登录"
+                               style="color: #1E9FFF;">
+                    </div>
+                    <div class="layui-col-md6">
+                        <a href="/user/forget">忘记密码</a>
+                    </div>
+                </div>
                 <div class="layui-form-item" style="margin-top: 7%;">
                     <div class="layui-input-block">
-                        <button class="layui-btn login_btn" lay-submit="" lay-filter="login">登录</button>
+                        <button class="layui-btn login_btn layui-btn-danger" lay-submit="" lay-filter="login">登录
+                        </button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                     </div>
                 </div>

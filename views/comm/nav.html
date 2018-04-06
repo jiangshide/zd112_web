@@ -1,120 +1,22 @@
 {{template "comm/top.html" .}}
 <div class="layui-row" style="background: #67120E;margin-bottom: 10px;">
     <ul class="nav">
-        {{range $k,$v := .nav}}
-                <li>
-                    <a href="{{$v.Action}}">{{$v.Name}}</a>
-                    <ul id="navlist">
-                        <div class="layui-row">
-                            {{range $v.NavList}}
-                             <li>
-                                 <a href="/">
-                                     <div class="layui-row">
-                                        <div class="layui-col-md11">{{.Name}}</div>
-                                         <div class="layui-col-md1">
-                                             >
-                                         </div>
-                                     </div>
-                                 </a>
-                                 <ul id="navlistItem">
-                                     {{range .NavListItem}}
-                                     <li><a href="/">{{.Name}}</a></li>
-                                     {{end}}
-                                 </ul>
-                             </li>
-                            {{end}}
-                        </div>
-                    </ul>
-                </li>
-        {{end}}
-        {{/*<li><a href="/" id="nava">首页</a></li>*/}}
-        {{/*<li>*/}}
-            {{/*<a href="/university" id="nava">学府</a>*/}}
-            {{/*<ul id="navlist">*/}}
-                {{/*<div class="layui-row"*/}}
-                     {{/*style="background-image: url('/static/img/drop_bg_v.png');background-repeat: no-repeat;">*/}}
-                {{/*{{range .navUniversity}}*/}}
-                    {{/*<li>*/}}
-                        {{/*<a href="/university">*/}}
-                            {{/*<div class="layui-row">*/}}
-                                {{/*<div class="layui-col-md11">{{.}}</div>*/}}
-                                {{/*<div class="layui-col-md1">*/}}
-                                    {{/*>*/}}
-                                {{/*</div>*/}}
-                            {{/*</div>*/}}
-                        {{/*</a>*/}}
-                        {{/*<ul id="navlistItem">*/}}
-                            {{/*<li><a>诗词1</a></li>*/}}
-                            {{/*<li><a>诗词2</a></li>*/}}
-                            {{/*<li><a>诗词3</a></li>*/}}
-                        {{/*</ul>*/}}
-                    {{/*</li>*/}}
-                {{/*{{end}}*/}}
-                {{/*</div>*/}}
-            {{/*</ul>*/}}
-        {{/*</li>*/}}
-        {{/*<li>*/}}
-            {{/*<a href="/" id="nava">民族</a>*/}}
-            {{/*<ul id="navlist">*/}}
-            {{/*{{range .navNation }}*/}}
-                {{/*<div class="layui-row">*/}}
-                {{/*{{range .}}*/}}
-                    {{/*<div class="layui-col-md1">*/}}
-                        {{/*<li><a href="/">{{.}}</a></li>*/}}
-                    {{/*</div>*/}}
-                {{/*{{end}}*/}}
-                {{/*</div>*/}}
+    {{range $k,$v := .nav}}
+        <li>
+            <a href="{{$v.Action}}">{{$v.Name}}</a>
+            <ul id="navlist">
+            {{range $i,$j := $v.NavList}}
+            {{/*<div class="layui-row">*/}}
+            {{/*<div class="layui-col-md1">*/}}
+            {{/*{{range  $j}}*/}}
+            {{/*<li><a href="{{.Action}}">{{.Name}}</a></li>*/}}
             {{/*{{end}}*/}}
-            {{/*</ul>*/}}
-        {{/*</li>*/}}
-        {{/*<li>*/}}
-            {{/*<a href="/" id="nava">音乐</a>*/}}
-            {{/*<ul id="navlist">*/}}
-            {{/*{{range .navAudio }}*/}}
-                {{/*<div class="layui-row">*/}}
-                {{/*{{range .}}*/}}
-                    {{/*<div class="layui-col-md1">*/}}
-                        {{/*<li><a href="/">{{.}}</a></li>*/}}
-                    {{/*</div>*/}}
-                {{/*{{end}}*/}}
-                {{/*</div>*/}}
-            {{/*{{end}}*/}}
-            {{/*</ul>*/}}
-        {{/*</li>*/}}
-
-        {{/*<li>*/}}
-            {{/*<a href="/" id="nava">视频</a>*/}}
-            {{/*<ul id="navlist">*/}}
-            {{/*{{range .navVideo}}*/}}
-                {{/*<li><a href="/video">{{.}}</a></li>*/}}
-            {{/*{{end}}*/}}
-            {{/*</ul>*/}}
-        {{/*</li>*/}}
-        {{/*<li>*/}}
-            {{/*<a href="/" id="nava">原创</a>*/}}
-            {{/*<ul id="navlist">*/}}
-            {{/*{{range .navOriginal}}*/}}
-                {{/*<li><a href="/video">{{.}}</a></li>*/}}
-            {{/*{{end}}*/}}
-            {{/*</ul>*/}}
-        {{/*</li>*/}}
-        {{/*<li>*/}}
-            {{/*<a href="/" id="nava">题库</a>*/}}
-            {{/*<ul id="navlist">*/}}
-            {{/*{{range .navQuestion}}*/}}
-                {{/*<li><a href="/video">{{.}}</a></li>*/}}
-            {{/*{{end}}*/}}
-            {{/*</ul>*/}}
-        {{/*</li>*/}}
+            {{/*</div>*/}}
+            {{/*</div>*/}}
+                <li><a href="{{.Action}}">{{.Name}}</a></li>
+            {{end}}
+            </ul>
+        </li>
+    {{end}}
     </ul>
 </div>
-<script type="text/javascript">
-    $(document).ready(function (obj) {
-        $('#navlist a').hover(function (obj) {
-            $('#navlistitem').addClass('on')
-        }, function () {
-            $('#navlistitem').removeClass('on')
-        })
-
-    });
-</script>

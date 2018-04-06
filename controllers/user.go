@@ -81,6 +81,11 @@ func (this *UserController) Reg() {
 	this.display()
 }
 
+func (this *UserController) Forget() {
+	beego.ReadFromRequest(&this.Controller)
+	this.display()
+}
+
 func (this *UserController) Logout() {
 	this.Ctx.SetCookie(AUTH, "")
 	this.redirect("/")

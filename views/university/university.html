@@ -1,61 +1,121 @@
 {{template "comm/head.html" .}}
-{{/*<div class="layui-row">*/}}
 {{template "comm/nav.html" .}}
 <div class="content">
     <img src="/static/img/banner1.png" style="width: 100%;height: 100px;"/>
-</div>
-<div style="margin-top:20px;border:1px solid #C6C6C8;padding-top: 10px;padding-bottom: 10px;">
-    <div class="layui-row content universityNav">
-        <div style="width: 3%;font-size: 20px;color: #616263;">
-            <
+    <div style="border-top:solid 2px #C6C6C8;border-left:solid 2px #C6C6C8;border-right:solid 2px #C6C6C8;border-radius:5px 5px 0px 0px;padding: 15px;margin-top: 25px;">
+        <div style="border-bottom:dashed 1px #C6C6C8;padding-bottom: 10px;">
+            <div class="layui-row universityNav">
+            {{$university := .university}}
+            {{if gt $university.PoetArrow 0}}
+                <div style="width: 3%;font-size: 20px;color: #616263;">
+                    <a {{if eq $university.PoetArrow 1}}
+                    style="color: #D3D4D3;"{{else if eq $university.PoetArrow 2}}
+                    href="/university?poetId={{$university.PoetId}}" style="color: #861B14;" {{else}}
+                    href="/university?poetId={{$university.PoetId}}" style="color: #861B14;" {{end}}>
+                        <
+                    </a>
+                </div>
+            {{end}}
+                <div class="layui-row" style="width: 94%;">
+                {{range $k,$v := $university.Poet}}
+                    <div class="layui-col-md1" {{if gt $university.PoetArrow 0}}style="text-align:center;"{{end}} >
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="poet"
+                           id="{{if eq $k 0}}selected{{else}}unselected{{end}}">{{.Name}}</a>
+                    </div>
+                {{end}}
+                </div>
+            {{if gt $university.PoetArrow 0}}
+                <div style="width: 3%;font-size: 20px;text-align: right;color: #616263;">
+                    <a {{if eq $university.PoetArrow 3}}
+                    style="color: #D3D4D3;" {{else if eq $university.PoetArrow 2}}
+                    href="/university?poetId={{$university.PoetId}}"
+                    style="color: #861B14;"  {{else}}href="/university?poetId={{$university.PoetId}}"
+                    style="color: #861B14;" {{end}}>
+                        >
+                    </a>
+                </div>
+            {{end}}
+            </div>
         </div>
-        <div style="width: 94%;">
-        {{range $k,$v := .title1}}
-        {{ if eq $k 0}}
-            <span style="color: #861B14;font-size: 20px;">{{.}}</span>
-        {{else}}
-            <span style="color: #616263;font-size: 16px;margin-left: 5%;">{{.}}</span>
-        {{end}}
-        {{end}}
+        <div style="border-bottom:dashed 1px #C6C6C8;padding-top: 10px;padding-bottom: 10px;">
+            <div class="layui-row universityNav">
+            {{if gt $university.DynastyArrow 0}}
+                <div style="width: 3%;font-size: 20px;color: #616263;">
+                    <a {{if eq $university.DynastyArrow 1}}style="color: #D3D4D3;" {{else if eq $university.DynastyArrow 2}}
+                    href="/university?dynastyId={{$university.dynastyId}}" style="color: #861B14;"  {{else}}
+                    href="/university?dynastyId={{$university.dynastyId}}" style="color: #861B14;" {{end}}>
+                        <
+                    </a>
+                </div>
+            {{end}}
+                <div style="width: 94%;">
+                {{range $k,$v := $university.Dynasty}}
+                    <div class="layui-col-md1"
+                         {{if gt $university.DynastyArrow 0}}style="text-align:center;"{{end}}>
+                        <a href="#" id="{{if eq $k 0}}selected{{else}}unselected{{end}}">{{.Name}}</a>
+                    </div>
+                {{end}}
+                </div>
+            {{if gt $university.DynastyArrow 0}}
+                <div style="width: 3%;font-size: 20px;text-align: right;color: #616263;">
+                    <a {{if eq $university.DynastyArrow 3}}
+                    style="color: #D3D4D3;" {{else if eq $university.PoetArrow 2}}
+                    href="/university?dynastyId={{$university.DynastyId}}"
+                    style="color: #861B14;"  {{else}}href="/university?dynastyId={{$university.DynastyId}}"
+                    style="color: #861B14;" {{end}}>
+                        >
+                    </a>
+                </div>
+            {{end}}
+            </div>
         </div>
-        <div style="width: 3%;font-size: 20px;text-align: right;color: #616263;">
-            >
+        <div style="padding-top: 10px;">
+            <div class="layui-row universityNav">
+            {{if gt $university.AuthArrow 0}}
+                <div style="width: 3%;font-size: 20px;color: #616263;">
+                    <a {{if eq $university.AuthArrow 1}}
+                    style="color: #D3D4D3;" {{else if eq .university.PoetArrow 2}}
+                    href="/university?authId={{$university.AuthId}}"
+                    style="color: #861B14;"  {{else}}href="/university?authId={{$university.AuthId}}"
+                    style="color: #861B14;" {{end}}>
+                        <
+                    </a>
+                </div>
+            {{end}}
+                <div style="width: 94%;">
+                {{range $k,$v := $university.Auth}}
+                    <div class="layui-col-md1" {{if gt $university.AuthArrow 0}}style="text-align:center;"{{end}}>
+                        <a href="#" id="{{if eq $k 0}}selected{{else}}unselected{{end}}">{{.Name}}</a>
+                    </div>
+                {{end}}
+                </div>
+            {{if gt $university.AuthArrow 0}}
+                <div style="width: 3%;font-size: 20px;text-align: right;color: #616263;">
+                    <a {{if eq $university.AuthArrow 3}}
+                    style="color: #D3D4D3;" {{else if eq $university.PoetArrow 2}}
+                    href="/university?authId={{$university.AuthId}}"
+                    style="color: #861B14;"  {{else}}href="/university?authId={{$university.AuthId}}"
+                    style="color: #861B14;" {{end}}>
+                        >
+                    </a>
+                </div>
+            {{end}}
+            </div>
+        {{if gt $university.AuthArrow 0}}
+            <div style="text-align: right;">
+                1/15 去第<input type="text" style="width: 30px;text-align: center;">页
+                <button class="layui-btn layui-btn-primary layui-btn-xs"
+                        style="color: white;background: #861B14;margin-left: 10px;">确定
+                </button>
+            </div>
+        {{end}}
         </div>
     </div>
-</div>
-<div style="border-bottom:solid 2px #C6C6C8;padding-top: 10px;padding-bottom: 10px;">
-    <div class="content">
-        <div class="layui-row universityNav">
-            <div style="width: 3%;font-size: 20px;color: #616263;">
-                <
-            </div>
-            <div style="width: 94%;">
-            {{range $k,$v := .title2}}
-            {{ if eq $k 0}}
-                <span style="color: #861B14;font-size: 20px;">{{.}}</span>
-            {{else}}
-                <span style="color: #616263;font-size: 16px;margin-left: 5%;">{{.}}</span>
-            {{end}}
-            {{end}}
-            </div>
-            <div style="width: 3%;font-size: 20px;text-align: right;color: #616263;">
-                >
-            </div>
-        </div>
-        <div style="text-align: right;">
-            1/15 去第<input type="text" style="width: 30px;text-align: center;">页
-            <button class="layui-btn layui-btn-primary layui-btn-xs"
-                    style="color: white;background: #861B14;margin-left: 10px;">确定
-            </button>
-        </div>
-    </div>
-</div>
-<div class="content">
 {{range $k,$v := .universityContent}}
-    <div class="layui-row" style="margin-top: 20px;">
-    {{range $v}}
-        <div class="layui-col-xs3" style="height: 100%;padding-right: 10px;">
-            <div class="img_tips effect">
+    <div class="layui-row" style="margin-bottom: 30px;">
+    {{range $i,$j := $v}}
+        <div class="layui-col-xs3" style="{{if eq $i 3}}padding-right:0px;{{else}}padding-right:17px;{{end}}">
+            <div class="img_tips effect" style="background: saddlebrown;">
                 <div class="">
                     <img src="{{.Icon}}" alt="失效!">
                 </div>
@@ -91,7 +151,7 @@
                     <img src="{{.User.Icon}}"
                          class="layui-nav-img" style="width: 20px;height: 20px;">{{.User.Name}}
                 </div>
-                <div class="layui-col-xs1" style="width: 20%;">
+                <div class="layui-col-xs1" style="width: 20%;text-align: right;">
                 {{.Before}}
                 </div>
             </div>
@@ -101,16 +161,18 @@
 {{end}}
     <div class="ayui-btn-disabled" id="page" style="text-align: center;"></div>
 </div>
-{{/*</div>*/}}
 <script>
-    layui.use(['laypage', 'layer'], function () {
-        var laypage = layui.laypage, layer = layui.layer
+    layui.use(['laypage', 'table', 'element', 'layer', 'jquery'], function () {
+        var element = layui.element;
+        $ = layui.jquery;
+
+        var laypage = layui.laypage, layer = layui.layer;
         laypage.render({
             elem: 'page'
-            ,anim:1
+            , anim: 1
             , count: 1000
-            ,limit:20
-            ,theme:'#67120E'
+            , limit: 30
+            , theme: '#67120E'
             , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
             , jump: function (obj) {
                 console.log(obj);
