@@ -2,9 +2,10 @@
     <div class="layui-carousel" id="banner">
         <div carousel-item>
         {{range .banner}}
-            <div><a href="{{.Link}}"><img
-                    src="http://localhost:8083/{{.Icon}}"
-                    width="100%;" alt="{{.Descript}}"></a></div>
+            <div><a href="http://localhost:8080/video?id={{.id}}"><img
+                    src="{{.url}}"
+                    width="100%;"
+                    height="100%" alt="{{.des}}"></a></div>
         {{end}}
         </div>
     </div>
@@ -16,6 +17,8 @@
         carousel.render({
             elem: '#banner'
             , width: '100%' //设置容器宽度
+            ,height:'800px'
+            ,
 
             // ,arrow: 'always' //始终显示箭头
             // ,anim: 'updown' //切换动画方式

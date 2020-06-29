@@ -51,7 +51,7 @@ func (this *BaseController) Prepare() {
 }
 
 func (this *BaseController) setCook(user *models.User, time int) {
-	this.Ctx.SetCookie(AUTH, fmt.Sprint(user.Id)+"|"+utils.Md5(this.getIp()+"|"+user.Password+user.Salt), time)
+	this.Ctx.SetCookie(AUTH, fmt.Sprint(user.Id)+"|"+utils.Md5ToStr(this.getIp()+"|"+user.Password+user.Salt), time)
 }
 
 func (this *BaseController) auth() (user *models.User, err error) {
@@ -201,7 +201,7 @@ func (this *BaseController) Upload() {
 	if strings.Contains(fh.Filename, ".") {
 		sufix = fileName[strings.LastIndex(fileName, ".")+1:]
 	}
-	fileName = utils.Md5(this.userName+time.RubyDate+utils.GetRandomString(10)) + "_" + fmt.Sprint(time.Now().Unix()) + "." + sufix
+	fileName = utils.Md5ToStr(this.userName+time.RubyDate+utils.GetRandomString(10)) + "_" + fmt.Sprint(time.Now().Unix()) + "." + sufix
 	toFilePath := this.upload + sufix + "/" + fileName
 	var size, reSize int64
 	if err = this.SaveToFile("file", utils.GetCurrentDir(toFilePath)); err == nil {

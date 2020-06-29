@@ -95,7 +95,9 @@ func (this *IndexController) getItem(poetry map[string]string) []*Content {
 }
 
 func (this *IndexController) banner() {
-	banner := new(models.Banner)
-	list, _ := banner.List(this.pageSize, this.offSet)
-	this.Data["banner"] = list
+	// banner := new(models.Banner)
+	// list, _ := banner.List(this.pageSize, this.offSet)
+	maps ,ids,err := models.SqlList("SELECT * FROM zd_blog WHERE format=0",[...]interface{}{})
+	beego.Info("-------maps:",maps," | ids:",ids," | err:",err)
+	this.Data["banner"] = maps
 }

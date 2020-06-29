@@ -67,3 +67,36 @@ func Field(model interface{}) (fieldName string, fieldValue interface{}) {
 	}
 	return
 }
+
+func SqlRaw(sql string,ids interface{})(res interface{},err error){
+	res,err = orm.NewOrm().Raw(sql,ids).Exec()
+	return
+}
+
+
+func SqlCount(table string,maps map[string]interface{})(count int64,err error){
+	query := orm.NewOrm().QueryTable(table)
+	for k,v := range maps{
+		beego.Info("k:",k," | v:",v)
+		query = query.Filter(k,v)
+	}
+	count,err = query.Count()
+	return
+}
+
+func Sql(sql string,ids interface{})(res interface{},id int64,err error) {
+	var maps []orm.Params
+ 	o := orm.NewOrm()
+    id,err = o.Raw(sql,ids).Values(&maps)
+   if len(maps) > 0{
+   		res = maps[0]
+   }
+    return res,id,err
+}
+
+func SqlList(sql string,ids interface{}) (list *[]orm.Params,id int64,err error) {
+ 	var maps []orm.Params
+ 	o := orm.NewOrm()
+    id,err = o.Raw(sql,ids).Values(&maps)
+    return &maps,id,err
+}
