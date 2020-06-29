@@ -12,14 +12,6 @@ import (
 	"net"
 )
 
-const (
-	MSG_OK           = 0
-	MSG_ERR          = -1
-	AUTH             = "auth"
-	DEFAULT_TIPS     = "该项不能为空!"
-	DEFAULT_MIN_SIZE = 3
-)
-
 type BaseController struct {
 	beego.Controller
 	version    string
@@ -339,7 +331,7 @@ type NavListItem struct {
 }
 
 func (this *BaseController) nav() {
-	navs := new(models.Nav)
+	navs := new(models.ChannelType)
 	result, _ := navs.List(-1, -1)
 	navArr := []Nav{}
 	for _, v := range result {

@@ -1,14 +1,14 @@
 {{template "comm/head.html" .}}
 <div class="layui-row">
 {{template "comm/nav.html" .}}
-    <div>
+    <div class="banner">
     {{template "comm/banner.html" .}}
     </div>
     <div class="content">
 
         <div class="layui-row" style="height: 150px;margin-top: 10px;text-align:center;font-size: 20px;color: white;">
         {{range $k,$v := .group}}
-            <div class="layui-col-xs3" style="height: 100%;padding-right: 10px;">
+            <div class="layui-col-xs3" style="height: 100%;padding-right: 5px;padding-left: 5px;">
                 <div style="height: 100%;background-image: url('{{$k}}');padding-top: 100px;">
                     <span id="scale">{{$v}}</span>
                 </div>

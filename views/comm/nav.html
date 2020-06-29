@@ -1,8 +1,12 @@
 {{template "comm/top.html" .}}
-<div class="layui-row" style="background: #67120E;margin-bottom: 10px;">
-    <ul class="nav">
+<div class="layui-row" style="background: white;margin-bottom: 0px; width: 80%;
+margin-left: 0%;
+    margin-right: 10%;
+    padding-right: 5px;
+    padding-left: 5px;">
+    <ul class="nav" style="background: #33353f;width: 100%;">
     {{range $k,$v := .nav}}
-        <li>
+        <li style="width: 120px; background: #33353f">
             <a href="{{$v.Action}}">{{$v.Name}}</a>
             <ul id="navlist">
             {{range $i,$j := $v.NavList}}
