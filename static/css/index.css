@@ -55,7 +55,7 @@ body {
 .nav {
     background: #1F1E23;
     font: bold 20px/30px sans-serif;
-    margin-left: 8%;
+    margin-left: 0%;
 }
 
 .nav li {
@@ -68,7 +68,7 @@ body {
 
 .nav a {
     background: none;
-    width: 50%;
+    width: 100%;
     color: #FFFFFF;
     display: block;
     padding: 5px 10px;

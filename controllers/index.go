@@ -20,8 +20,10 @@ type IndexController struct {
 func (this *IndexController) Get() {
 	this.nav()
 	this.banner()
+	this.qrImg()
 	this.group()
 	this.universityItem()
+	this.channel()
 	this.nationItem()
 	this.audioItem()
 	this.videoItem()
@@ -30,8 +32,20 @@ func (this *IndexController) Get() {
 	this.display("index")
 }
 
+func (this *IndexController) channel(){
+	id := this.getInt("id",-1)
+	uid := this.userId
+	maps,ids,err := models.Channels(uid,models.CHANNEL_TYPE_ID,[...]interface{}{uid,uid,uid,uid,id,20,0})
+	beego.Info("------maps:",maps," | id:",id," | uid:",uid)
+	if err != nil || ids==0{
+		// this.showTips("data is null")
+	}else{
+		this.Data["maps"] = maps
+	}
+}
+
 func (this *IndexController) group() {
-	group := map[string]string{"/static/img/group1.png": "热门活动", "/static/img/group2.png": "猜你喜欢", "/static/img/group3.png": "每日最新", "/static/img/group4.png": "每日签到"}
+	group := map[string]string{"/static/img/group3.png": "最新","/static/img/group1.png": "最热", "/static/img/group2.png": "猜你喜欢", "/static/img/group4.png": "每日签到"}
 	this.Data["group"] = group
 }
 
@@ -97,7 +111,13 @@ func (this *IndexController) getItem(poetry map[string]string) []*Content {
 func (this *IndexController) banner() {
 	// banner := new(models.Banner)
 	// list, _ := banner.List(this.pageSize, this.offSet)
-	maps ,ids,err := models.SqlList("SELECT * FROM zd_blog WHERE format=0",[...]interface{}{})
-	beego.Info("-------maps:",maps," | ids:",ids," | err:",err)
+	maps ,_,_ := models.SqlList("SELECT * FROM zd_blog WHERE format=0",[...]interface{}{})
 	this.Data["banner"] = maps
+}
+
+func (this *IndexController) qrImg() {
+	app := new(models.App)
+	res,_ := app.List(1,0)
+	beego.Info("app:",app)
+	this.Data["android"] = res[0].Qr
 }

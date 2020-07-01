@@ -3,8 +3,8 @@ package controllers
 import (
 	"zd112_web/models"
 	"github.com/astaxie/beego"
-	"zd112/utils"
-	// "time"
+	"github.com/jiangshide/GoComm/utils"
+	"time"
 	// "runtime"
 )
 
@@ -24,22 +24,15 @@ func (this *UserController) Login() {
 		user.Name = this.getString("username", "账号不能为空!", DEFAULT_MIN_SIZE)
 		password := this.getString("password", "密码不能为空!", DEFAULT_MIN_SIZE)
 		beego.Info("----------name:",user.Name," | password:",password)
-		if err := user.Query(); err != nil {
+		if err := user.Query("name",user.Name); err != nil {
 			beego.Info("err:", err, " | user:", user)
 			this.showTips("该账号不存在!")
 		}
-		// if user.Status == 0 {
-		// 	this.showTips("该账号未激活!")
-		// } else if user.Status == 2 {
-		// 	this.showTips("该账号已被禁用!")
-		// } else if user.Password != utils.Md5(password+user.Salt) {
-		// 	this.showTips("该账号密码错误!")
-		// }
 		if user.Status == USER_FORBIDDEN {
 			this.showTips(USER_FORBIDDEN)
 		}else if user.Status == -1 ||user.Status == -2 || user.Status == -4{
 			this.showTips(USER_EXCEPTION)
-		} else if user.Password != utils.Md5(utils.Md5(password)+user.Salt) {
+		} else if user.Password != utils.Md5ToStr(utils.Md5ToStr(password)+user.Salt) {
 			this.showTips(USER_PASSWORD_ERR)
 		}else{
 			
@@ -75,18 +68,63 @@ func (this *UserController) Login() {
 func (this *UserController) Reg() {
 	beego.ReadFromRequest(&this.Controller)
 	if this.isPost() {
+
 		user := new(models.User)
-		user.Name = this.getString("username", "账号不能为空!", DEFAULT_MIN_SIZE)
-		password := this.getString("password", "密码不能为空!", DEFAULT_MIN_SIZE)
-		rePassword := this.getString("repassword", "请再次输入密码!", DEFAULT_MIN_SIZE)
-		if password != rePassword {
-			this.showTips("密码不一致!")
+		user.Source = 2
+		user.Name = this.getString("username", DEFAULT_TIPS, DEFAULT_MIN_SIZE)
+		password := this.getString("password", DEFAULT_TIPS, DEFAULT_MIN_SIZE)
+		repassword := this.getString("repassword",DEFAULT_TIPS, DEFAULT_MIN_SIZE)
+		if password != repassword{
+			this.showTips(PASSWORD_DIFFER)
 		}
+		// Country := this.getString("country","",0)
+		// icon := this.getString("icon",DEFAULT_TIPS,DEFAULT_MIN_SIZE) 
+		intro := this.getString("intro","",0)
+
+		// latitude := this.getFloat("latitude",0.0)
+		// longitude := this.getFloat("longitude",0.0)
+		// locationType := this.getString("locationType",0,0)
+		// adCode := this.getString("adCode",0,0)
+
+
+		// netInfo := this.getString("netInfo",0,0)
+		// device:= this.getString("device",0,0)
+		
 		user.Salt = utils.GetRandomString(10)
-		user.Password = utils.Md5(password + user.Salt)
-		if _, err := user.Add(); err != nil {
+		user.Password = utils.Md5ToStr(utils.Md5ToStr(password) + user.Salt)
+		user.Status=2
+		user.Ip = this.getIp()
+		id, err := user.Add();
+		if err != nil {
 			this.showTips(err)
 		}
+		profile:=new(models.Profile)
+		profile.Id = id
+		profile.UnionId = user.Name
+		profile.Nick = utils.GetRandomName()
+		if intro == ""{
+			profile.Intro=DEFAULT_INTRO
+		}else{
+			profile.Intro=intro
+		}
+		
+		profile.Icon = this.defaultIcon
+		profile.Sex = this.getInt("sex",0)
+		// profile.Latitude = latitude
+		// profile.Longitude = longitude
+		// profile.LocationType = locationType
+		// profile.Country = country
+		// profile.City = position.City
+		// profile.AdCode  = adCode
+		_,err = profile.Add()
+		if err != nil{
+			this.showTips(err)		
+		}
+
+		models.InitFrequency(id,0,time.Now().Unix(),2,1)
+		models.InitFrequency(id,0,time.Now().Unix(),6,1)
+		models.InitUserChannelNature(id,"","",this.getIp(),REG)
+		models.CourseAdd(id,id,1,"世界，我来了!",DEFAULT_INTRO,this.defaultIcon,"")
 		this.redirect("/")
 	}
 	this.display()

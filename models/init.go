@@ -26,9 +26,9 @@ func Init() {
 		dns += "&loc=" + url.QueryEscape(timeZone)
 	}
 	orm.RegisterDataBase("default", "mysql", dns, maxConn, maxIdle)
-	orm.RegisterModel(new(User), new(UserLocation), new(UserProfile), new(ChannelType), new(Banner), new(Nation))
+	orm.RegisterModel(new(User),new(WeiXinInfo),new(Profile),new(Frequency),new(Certification),new(Remarks),new(Course),new(Invite),new(Friend),new(UserTop),new(UserFollow),new(UserRecommend),new(Position),new(DeviceInfo),new(Device),new(Channel),new(ChannelNature),new(ChannelNatureUser),new(ChannelType),new(ChannelTypeUser),new(ChannelTop),new(ChannelRecommend),new(Blog),new(BlogPraise),new(BlogRecommend),new(BlogTop),new(BlogView),new(BlogCollection),new(BlogShare),new(Format),new(File),new(Top),new(Praise),new(Comment),new(CommentPraise),new(CommentUid),new(CommentUidPraise),new(Share),new(View),new(History),new(Report),new(ReportType),new(App),new(AppCount),new(Word))
 	if beego.AppConfig.String("runmode") == "dev" {
-		orm.Debug = true
+		orm.Debug = true		
 	}
 }
 

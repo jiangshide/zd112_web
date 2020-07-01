@@ -24,6 +24,7 @@ type BaseController struct {
 	pageSize   int
 	offSet     int
 	upload     string
+	defaultIcon string
 }
 
 func (this *BaseController) Prepare() {
@@ -36,9 +37,11 @@ func (this *BaseController) Prepare() {
 	this.page, _ = this.GetInt("page", 1)
 	this.pageSize, _ = this.GetInt("limit", 30)
 	this.offSet = (this.page - 1) * this.pageSize
-	Tinify.SetKey(this.GetString("pic_key"))
-	this.upload = this.GetString("upload")
-
+	key := beego.AppConfig.String("pic_key")
+	Tinify.SetKey(key)
+	this.upload = beego.AppConfig.String("upload")
+	this.defaultIcon = "http://" + utils.GetLocalAdder() + ":"+beego.AppConfig.String("httpport")+"/static/img/logo.png"
+	beego.Info("------upload:",this.upload," | key:",key," | page:",this.page)		
 	this.auth()
 }
 
@@ -46,18 +49,20 @@ func (this *BaseController) setCook(user *models.User, time int) {
 	this.Ctx.SetCookie(AUTH, fmt.Sprint(user.Id)+"|"+utils.Md5ToStr(this.getIp()+"|"+user.Password+user.Salt), time)
 }
 
-func (this *BaseController) auth() (user *models.User, err error) {
+func (this *BaseController) auth() (profile *models.Profile, err error) {
 	cook := this.Ctx.GetCookie(AUTH)
 	beego.Info("-----cook:", cook)
 	if strings.Contains(cook, "|") {
 		cookArr := strings.Split(cook, "|")
-		user = new(models.User)
-		user.Id, _ = strconv.ParseInt(cookArr[0], 11, 64)
-		if err = user.Query(); err == nil {
-			this.userId = user.Id
-			this.userName = user.Name
+		profile = new(models.Profile)
+		id, _ := strconv.ParseInt(cookArr[0], 11, 64)
+		if err = profile.Query("id",id); err == nil {
+			this.userId = profile.Id
+			this.userName = profile.Nick
+			this.defaultIcon = profile.Icon
 			this.Data["userId"] = this.userId
 			this.Data["userName"] = this.userName
+			this.Data["icon"]=this.defaultIcon
 			this.Data["isLogin"] = true
 			beego.Info("------userId:", this.userId, " | userName:", this.userName)
 		}
@@ -196,7 +201,9 @@ func (this *BaseController) Upload() {
 	fileName = utils.Md5ToStr(this.userName+time.RubyDate+utils.GetRandomString(10)) + "_" + fmt.Sprint(time.Now().Unix()) + "." + sufix
 	toFilePath := this.upload + sufix + "/" + fileName
 	var size, reSize int64
-	if err = this.SaveToFile("file", utils.GetCurrentDir(toFilePath)); err == nil {
+	path := utils.GetCurrentDir(toFilePath)
+	beego.Info("--------path:",path," | toFilePath:",toFilePath)
+	if err = this.SaveToFile("file", path); err == nil {
 		size, reSize = this.compress(toFilePath)
 	}
 	this.ajaxMsgFile(toFilePath, size, reSize, MSG_OK)
@@ -210,17 +217,17 @@ func (this *BaseController) setFileSize(row map[string]interface{}, file string)
 func (this *BaseController) compress(path string) (int64, int64) {
 	path = utils.GetCurrentDir(path)
 	size, _ := utils.FileSize(path)
-	src, err := Tinify.FromFile(path)
+	// src, err := Tinify.FromFile(path)
 	var reSize int64
-	if err == nil {
-		if err = src.ToFile(path); err == nil {
-			res, _ := utils.FileSize(path)
-			reSize = res
-		}
-	}
-	if err != nil {
-		beego.Error("compress:", err)
-	}
+	// if err == nil {
+	// 	if err = src.ToFile(path); err == nil {
+	// 		res, _ := utils.FileSize(path)
+	// 		reSize = res
+	// 	}
+	// }
+	// if err != nil {
+	// 	beego.Error("compress:", err)
+	// }
 	return size, reSize
 }
 
@@ -333,77 +340,77 @@ type NavListItem struct {
 func (this *BaseController) nav() {
 	navs := new(models.ChannelType)
 	result, _ := navs.List(-1, -1)
-	navArr := []Nav{}
-	for _, v := range result {
-		var nav Nav
-		nav.Name = v.Name
-		nav.Action = "#"
-		if v.Name == "学府" {
-			beego.Info("----------------id:",v.Id)
+	// navArr := []Nav{}
+	// for _, v := range result {
+	// 	var nav Nav
+	// 	nav.Name = v.Name
+	// 	nav.Action = "#"
+	// 	if v.Name == "学府" {
+	// 		beego.Info("----------------id:",v.Id)
 
-			for _, v := range this.university(1) {
-				var navList NavList
-				navList.Name = v
-				navList.Action = "/university"
-				//if v == "诗词" {
-				//	shichi := []string{"年代诗人", "著名诗人", "诗词标签", "诗词故事"}
-				//	for _, v := range shichi {
-				//		var navListItem NavListItem
-				//		navListItem.Name = v
-				//		//navList.NavListItem[0] = append(navList.NavListItem[0], navListItem)
-				//	}
-				//} else {
-				//	shichi := []string{"年代", "著名", "诗词标签", "诗词故事"}
-				//	for _, v := range shichi {
-				//		var navListItem NavListItem
-				//		navListItem.Name = v
-				//		//navList.NavListItem[0] = append(navList.NavListItem[0], navListItem)
-				//	}
-				//}
-				nav.NavList = append(nav.NavList, navList)
-			}
-		} else if v.Name == "民族" {
-			for _, v := range this.nation(1, 0) {
-				var navList NavList
-				navList.Name = v
-				navList.Action = "/nation"
-				nav.NavList = append(nav.NavList, navList)
-			}
-		} else if v.Name == "音乐" {
-			for _, v := range this.audio(1) {
-				var navList NavList
-				navList.Name = v
-				navList.Action = "/audio"
-				nav.NavList = append(nav.NavList, navList)
-			}
-		} else if v.Name == "视频" {
-			for _, v := range this.video(1) {
-				var navList NavList
-				navList.Name = v
-				navList.Action = "/video"
-				nav.NavList = append(nav.NavList, navList)
-			}
-		} else if v.Name == "原创" {
-			for _, v := range this.original(1) {
-				var navList NavList
-				navList.Name = v
-				navList.Action = "/original"
-				nav.NavList = append(nav.NavList, navList)
-			}
-		} else if v.Name == "题库" {
-			for _, v := range this.question(1) {
-				var navList NavList
-				navList.Name = v
-				navList.Action = "/question"
-				nav.NavList = append(nav.NavList, navList)
-			}
-		} else {
-			nav.Action = "/"
-		}
-		navArr = append(navArr, nav)
-	}
-	beego.Info("--------navArr:", navArr)
-	this.Data["nav"] = navArr
+	// 		for _, v := range this.university(1) {
+	// 			var navList NavList
+	// 			navList.Name = v
+	// 			navList.Action = "/university"
+	// 			//if v == "诗词" {
+	// 			//	shichi := []string{"年代诗人", "著名诗人", "诗词标签", "诗词故事"}
+	// 			//	for _, v := range shichi {
+	// 			//		var navListItem NavListItem
+	// 			//		navListItem.Name = v
+	// 			//		//navList.NavListItem[0] = append(navList.NavListItem[0], navListItem)
+	// 			//	}
+	// 			//} else {
+	// 			//	shichi := []string{"年代", "著名", "诗词标签", "诗词故事"}
+	// 			//	for _, v := range shichi {
+	// 			//		var navListItem NavListItem
+	// 			//		navListItem.Name = v
+	// 			//		//navList.NavListItem[0] = append(navList.NavListItem[0], navListItem)
+	// 			//	}
+	// 			//}
+	// 			nav.NavList = append(nav.NavList, navList)
+	// 		}
+	// 	} else if v.Name == "民族" {
+	// 		for _, v := range this.nation(1, 0) {
+	// 			var navList NavList
+	// 			navList.Name = v
+	// 			navList.Action = "/nation"
+	// 			nav.NavList = append(nav.NavList, navList)
+	// 		}
+	// 	} else if v.Name == "音乐" {
+	// 		for _, v := range this.audio(1) {
+	// 			var navList NavList
+	// 			navList.Name = v
+	// 			navList.Action = "/audio"
+	// 			nav.NavList = append(nav.NavList, navList)
+	// 		}
+	// 	} else if v.Name == "视频" {
+	// 		for _, v := range this.video(1) {
+	// 			var navList NavList
+	// 			navList.Name = v
+	// 			navList.Action = "/video"
+	// 			nav.NavList = append(nav.NavList, navList)
+	// 		}
+	// 	} else if v.Name == "原创" {
+	// 		for _, v := range this.original(1) {
+	// 			var navList NavList
+	// 			navList.Name = v
+	// 			navList.Action = "/original"
+	// 			nav.NavList = append(nav.NavList, navList)
+	// 		}
+	// 	} else if v.Name == "题库" {
+	// 		for _, v := range this.question(1) {
+	// 			var navList NavList
+	// 			navList.Name = v
+	// 			navList.Action = "/question"
+	// 			nav.NavList = append(nav.NavList, navList)
+	// 		}
+	// 	} else {
+	// 		nav.Action = "/"
+	// 	}
+	// 	navArr = append(navArr, nav)
+	// }
+	beego.Info("--------navArr:", result[0])
+	this.Data["nav"] = result
 
 	//this.Data["navUniversity"] = this.university(1)
 	//this.Data["navNation"] = this.list(this.nation(1, 0)...)

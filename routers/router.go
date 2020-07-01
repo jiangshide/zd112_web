@@ -24,4 +24,6 @@ func init() {
 	beego.Router("/upload", &controllers.BaseController{}, "*:Upload")
 	beego.Router("/ws", &controllers.WebSocketController{})
 	beego.ErrorController(&controllers.ErrorController{})
+
+	beego.Router("/add", &controllers.AppController{}, "*:Add")
 }

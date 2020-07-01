@@ -4,11 +4,16 @@
     margin-right: 10%;
     padding-right: 5px; 
     padding-left: 5px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 50;
+        background: #1F1E23;
     ">
         <div class="layui-col-md4">
             <a href="/" id="logo"><img src="/static/img/logo.png" width="35px" height="30px" style="padding-right: 10px;padding-bottom: 5px;" />梵记</a>
         </div>
-        <div class="layui-col-md4" style="padding: 7px;">
+        <div class="layui-col-md4" style="padding: 7px;">   
             <div class="search" style="padding: 5px;">
                 <form>
                     <div class="layui-row">
@@ -33,11 +38,11 @@
         </div>
         <div class="layui-col-md4" style="text-align: right;padding-top: 7px;text-align: center;">
         {{if .isLogin}}
-            <a href="" id="btn" style="margin-right: 5px;">{{.userName}}</a>
+            <a href="" id="btn" style="margin-right: 5px;"><img src="{{.icon}}" class="" style="width:30px; height:30px; border-radius:100%; overflow:hidden;margin-right:5px;padding-bottom: 5px;" />{{.userName}}</a>
             <span id="btn"
                   style="margin-right: 5px;">|</span><a
-                href="/user/logout" id="btn" style="margin-right: 15%;"> 退出</a>
-            <a href="/"><img src="/static/img/app_down.png" class="" width="40" height="25"/></a>
+                href="/user/logout" id="btn" style="margin-right: 15%;font: bold 10px/10px; color: gray;"> 退出</a>
+            <a href="/"><img src="/static/img/app_down.png" class="" width="40" height="30px"/></a>
         {{else}}
             <a href="/user/login" id="btn" style="margin-right: 5px;">登录</a><span id="btn"
                                                                                   style="margin-right: 5px;">|</span><a

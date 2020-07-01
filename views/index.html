@@ -1,8 +1,14 @@
 {{template "comm/head.html" .}}
 <div class="layui-row">
-{{template "comm/nav.html" .}}
-    <div class="banner">
+{{template "comm/top.html" .}}
+    <dir>
+        {{template "comm/right.html" .}}  
+    </dir>
+    <div class="banner" style="top: 50;">
     {{template "comm/banner.html" .}}
+    </div>
+    <div>
+    {{template "comm/nav.html" .}}
     </div>
     <div class="content">
 
