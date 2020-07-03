@@ -106,13 +106,22 @@ func (this *IndexController) getItem(poetry map[string]string) []*Content {
 		contentArr = append(contentArr, content)
 	}
 	return contentArr
-}
+}	
 
 func (this *IndexController) banner() {
 	// banner := new(models.Banner)
 	// list, _ := banner.List(this.pageSize, this.offSet)
-	maps ,_,_ := models.SqlList("SELECT * FROM zd_blog WHERE format=0",[...]interface{}{})
-	this.Data["banner"] = maps
+	// maps ,_,_ := models.SqlList("SELECT * FROM zd_channel WHERE format=0",[...]interface{}{})
+	// this.Data["banner"] = maps
+
+	uid := this.userId
+	maps,id,err := models.Channels(uid,models.CHANNEL_OFFICIAL,[...]interface{}{uid,uid,uid,uid,20,0})
+	beego.Info("maps:",maps)
+	if err != nil || id==0{
+		this.showTips("data is null")		
+	}else{
+		this.Data["banner"] = maps
+	}
 }
 
 func (this *IndexController) qrImg() {

@@ -46,8 +46,8 @@ func Channels(uid int64,sql string,ids interface{})(maps *[]orm.Params,id int64,
 		return
 	}
 	for _,v := range (*maps){
-		res,ids,err := Sql(BLOG_CHANNEL, [...]interface{}{uid,uid,uid,uid,uid,v["id"]})
-		beego.Info("err:",err," | res:",res," | ids:",ids)
+		res,_,_ := Sql(BLOG_CHANNEL, [...]interface{}{uid,uid,uid,uid,uid,v["id"]})
+		// beego.Info("err:",err," | res:",res," | ids:",ids)
 		if err == nil {
 			v["blog"] = res
 		// 	files,_,_ := SqlList(FILE,[...]interface{}{v["id"],3,20,0})
@@ -173,13 +173,17 @@ type ChannelType struct{
 	Id int `json:"id"`
 	Name string `json:"name"`//频道类型名称
 	Des string `json:"des"`//频道类型描述
+	Status int `json:"status"`//状态:1~显示,-1~隐藏
+	Sequence int `json:"sequence"`//显示顺序
 }
 
 func InitChannelType(){
-	types := [...]string{"推荐","热门","明星","萌宝","旅游","美食","艺术","教育","科技","娱乐","电影","图片","音乐","视频"}
-	for _,v := range types{
+	types := [...]string{"推荐","热门","直播","明星","萌宝","运动","旅游","家居","美食","艺术","教育","科技","娱乐","电影"}
+	for k,v := range types{
 		channelType := new(ChannelType)
 		channelType.Name = v
+		channelType.Status = 1
+		channelType.Sequence = k
 		_,err := channelType.Add()
 		if(err != nil){
 			beego.Info(err)
@@ -222,7 +226,7 @@ func (this *ChannelTypeUser) Add() (int64,error)  {
 	return orm.NewOrm().Insert(this)
 }
 
-var CHANNEL_TYPE = "select id,name,des from zd_channel_type"
+var CHANNEL_TYPE = "select id,name,des,status,sequence from zd_channel_type order by sequence"
 var CHANNEL_TYPE_UID = "select channel_type_id id,name,des,selected,num,note from zd_channel_type_user u,zd_channel_type t where t.id = u.channel_type_id and u.uid=?"
 
 type ChannelTop struct{
