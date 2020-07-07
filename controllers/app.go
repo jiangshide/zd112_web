@@ -3,7 +3,7 @@ package controllers
 import (
 	"zd112_web/models"
 	// "github.com/astaxie/beego/orm"
-	"github.com/astaxie/beego"
+	// "github.com/astaxie/beego"
 	"github.com/skip2/go-qrcode"
 	"github.com/jiangshide/GoComm/utils"
 	"fmt"	
@@ -33,7 +33,8 @@ func (this *AppController) Add() {
 		app.Platform = this.getString("platform","",0)
 		app.Env = this.getInt("env",0)
 		app.Version = this.getString("version","",0)
-		app.Url = "http://" + utils.GetLocalAdder() + ":"+beego.AppConfig.String("httpport")+url
+		// app.Url = "http://" + utils.GetLocalAdder() + ":"+beego.AppConfig.String("httpport")+url
+		app.Url = this.host+url
 		app.Duration = this.getInt("internel",1)
 		app.Times = this.getInt("times",10)
 		app.Status = this.getInt("status",0)

@@ -1,0 +1,22 @@
+<div class="layui-row" style="height: 100%;margin-left: 10%;margin-right: 10%;text-align:center;font-size: 20px;color: white;">
+        {{range .groups}}
+        <div class="layui-col-xs3" style="height: 100%;">
+            <div class="img_tips effect">
+                <div class="">
+                    <img src="{{.Cover}}" alt="{{.Name}}">
+                </div>
+                <a href="/blog?format={{.Format}}">
+                    <div class="text-desc layui-col-md5">
+                        <h2>-------------</h2>
+                        </br>
+                        <h2>{{.Name}}</h2>
+                        </br>
+                        <h3>{{.Des}}</h3>
+                        </br>
+                        <h2>-------------</h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {{end}}
+</div>

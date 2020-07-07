@@ -2,7 +2,8 @@ package models
 
 import ("github.com/astaxie/beego/orm"
  "github.com/astaxie/beego"
- // "encoding/json"
+ "encoding/json"
+ "github.com/jiangshide/GoComm/utils"
  )
 
 type Blog struct {
@@ -11,6 +12,7 @@ type Blog struct {
 	At string `json:"at"`//@用户
 	ChannelId int64 `json:"channelId"`//频道ID
 	PositionId int64 `json:"positionId"`//当前位置ID
+	Content string `json:"content"`//内容
 	Title string `json:"title"`//动态名称
 	Des string `json:"des"`//动态描述
 	Latitude float64 `json:"latitude"`//精度
@@ -69,7 +71,7 @@ var BLOG_COMMON = ",(SELECT name FROM zd_channel WHERE id=B.channel_id ) channel
 
 var BLOG_USER_TOP=",(SELECT status FROM zd_blog_top WHERE blog_id=B.id AND uid=? ) tops "
 
-var BlogSql = "SELECT B.id,B.uid,B.at,B.channel_id channelId,B.position_id positionId,B.title,B.des,B.latitude,B.longitude,B.location_type locationType,B.country,B.city,B.position,B.address,B.city_code cityCode,B.ad_code adCode,B.time_zone timeCone,B.tag,B.status,B.reason,B.official,B.url,B.cover,B.name,B.sufix,B.format,B.duration,B.width,B.height,B.size,B.rotate,B.bitrate,B.sample_rate sampleRate,B.level,B.mode,B.wave,B.lrc_zh lrcZh,B.lrc_es lrcEs,B.source,B.create_time date,UP.icon,UP.nick,UP.sex,UP.age,UP.zodiac,UP.city ucity "
+var BlogSql = "SELECT B.id,B.uid,B.at,B.channel_id channelId,B.position_id positionId,B.content,B.title,B.des,B.latitude,B.longitude,B.location_type locationType,B.country,B.city,B.position,B.address,B.city_code cityCode,B.ad_code adCode,B.time_zone timeCone,B.tag,B.status,B.reason,B.official,B.url,B.cover,B.name,B.sufix,B.format,B.duration,B.width,B.height,B.size,B.rotate,B.bitrate,B.sample_rate sampleRate,B.level,B.mode,B.wave,B.lrc_zh lrcZh,B.lrc_es lrcEs,B.source,B.create_time date,UP.icon,UP.nick,UP.sex,UP.age,UP.zodiac,UP.city ucity "
 
 var BLOG_SORT_DATE ="ORDER BY B.create_time DESC LIMIT ? OFFSET ? "//按时间
 
@@ -105,7 +107,7 @@ func (this *Blog) ReadOrCreates()(created bool, id int64, err error){
 	return
 }
 
-func Blogs(sql string,ids interface{})(maps *[]orm.Params,id int64,err error){
+func Blogs(uid int64,sql string,ids interface{})(maps *[]orm.Params,id int64,err error){
 	maps,id,err = SqlList(sql,ids)
 	beego.Info("err:",err," | id:",id)
 	if err != nil || id == 0{
@@ -114,11 +116,45 @@ func Blogs(sql string,ids interface{})(maps *[]orm.Params,id int64,err error){
 	for _,v := range (*maps){
 		files,_,_ := SqlList(FILE,[...]interface{}{v["id"],3,20,0})
 		v["urls"] = files
-		comments,_,_ := SqlList(COMMENT_STATUS,[...]interface{}{1,v["id"],10,0})
+		comments,_,_ := SqlList(COMMENT_STATUS,[...]interface{}{uid,uid,uid,v["id"],2,0})
+		for _,v := range *comments{
+			v["date"] = utils.StrTime(utils.TimeStamp(v["date"].(string)))
+		}
 		v["comments"] = comments
+		res,_,_ := Sql("SELECT id,position,size,txt_color,bg_color,scroll FROM zd_blog_style WHERE blog_id=?",[...]interface{}{v["id"]})
+		v["style"]=res
 	}
 	return
 }
+
+type BlogStyle struct{
+	Id int64 `json:"id"`
+	BlogId int64 `json:"blogId"`//动态ID
+	Position int `json:"position"`//位置:左上-51,上中-49,上右-53,右中-21,右下-85,下中-81,下左-83,左中-19
+	Size int `json:"size"`//文字大小
+	TxtColor string `json:"txtColor"`//文字颜色
+	BgColor string `json:"bgColor"`//背景颜色
+	Scroll int `json:"scroll"`//是否滚动:1~滚动,0~不滚动
+}
+
+
+func (this *BlogStyle) TableName() string {		
+	return TableName("blog_style")
+}
+
+func (this *BlogStyle) Add() (int64, error) {
+	return orm.NewOrm().Insert(this)
+}
+
+func AddBlogStyle(styleJson string,id int64){
+	beego.Info("styleJson:",styleJson)
+	var blogStyle BlogStyle
+	err := json.Unmarshal([]byte(styleJson),&blogStyle)
+	beego.Info("err:",err)
+	blogStyle.BlogId = id
+	blogStyle.Add()
+}
+
 
 type BlogPraise struct{
 	Id int64	`json:"id"`

@@ -1,0 +1,32 @@
+{{template "comm/head.html" .}}
+{{template "comm/top.html" .}}
+{{template "comm/right.html" .}}   
+{{template "comm/group.html" .}}
+<div> 
+    {{template "comm/nav.html" .}}
+</div>
+<div class="site-demo-flow" id=channelFlow>
+    {{ range $k,$v := .blogs}}
+        {{ if  eq "0" $v.format }}
+            {{template "blog/img.html" .}}
+        {{else if eq "1" $v.format }}
+            {{template "blog/audio.html" .}}
+        {{else if eq "2" $v.format }}
+            {{template "blog/video.html" .}}
+        {{else}}
+            {{template "blog/doc.html" .}}
+        {{end}}
+    {{end}}
+</div>
+<script>
+layui.use('flow', function(){
+  var flow = layui.flow;
+  // 按屏加载图片
+  flow.lazyimg({
+    elem: '#channelFlow img'
+    ,scrollElem: '#channelFlow' //一般不用设置，此处只是演示需要。
+  });
+  
+});
+</script>
+{{template "comm/foot.html" .}}

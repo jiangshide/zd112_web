@@ -1,314 +1,154 @@
-<div class="layui-row" style="margin-top:20px;margin-bottom: 10px;background: #1F1E23">
-{{range $k,$v := .university}}
-{{ if eq $k 0}}
-    <span style="color: white;font-size: 20px;">{{.}}</span>
-{{else}}
-    <span style="color: #808080;font-size: 16px;margin-left: 5%;">{{.}}</span>
-{{end}}
-{{end}}
-</div>
-<div class="layui-row">
-{{range .universityItem}}
-    <div class="layui-col-xs3" style="height: 100%;padding-right: 10px;">
-        <div class="img_tips effect">
-            <div class="">
-                <img src="{{.Icon}}" alt="失效!">
-            </div>
-            <a href="/">
-                <div class="text-desc layui-col-md5">
-                    <h2>-------------</h2>
-                    </br>
-                    <h2>{{.Title}}</h2>
-                    </br>
-                    <h3>{{.Name}} {{.Year}}</h3>
-                    </br>
-                    <h2>-------------</h2>
+<div class="site-demo-flow" id=channelFlow>
+    {{ range $k,$v := .maps}}
+        {{ if  eq "0" $v.blog.format }}
+            <div class="layui-col-xs3" style="height: 100%;padding-right: 10px;">
+            <div class="img_tips effect">
+                <div class="">
+                    <img src="{{.blogCover}}" alt="失效!">
                 </div>
-            </a>
-        </div>
-        <div class="layui-row" style="width: 100%;color:#808080;">
-            <div class="layui-col-xs3" style="width: 30%;">
-                <img src="/static/img/like.png">{{.Like}}
+                <a href="/blog?channelId={{.id}}">
+                    <div class="text-desc layui-col-md5">
+                        <h2>-------------</h2>
+                        </br>
+                        <h2>{{.blog.nick}}</h2>
+                        </br>
+                        <h3>{{.des}} {{.nick}}</h3>
+                        </br>
+                        <h2>-------------</h2>
+                    </div>
+                </a>
             </div>
-            <div class="layui-col-xs3" style="width: 40%;text-align: center;">
-                <img src="/static/img/follow.png">{{.Follow}}
-            </div>
-            <div class="layui-col-xs3" style="width: 30%;text-align: right;">
-                <img src="/static/img/info.png"/>{{.Info}}万
-            </div>
-        </div>
-        <div class="layui-row" style="color: #fffff9;">
-            <div class="layui-col-xs1" style="width: 80%;">
-                <img src="{{.User.Icon}}"
-                     class="layui-nav-img" style="width: 20px;height: 20px;">{{.User.Name}}
-            </div>
-            <div class="layui-col-xs1" style="width: 20%;">
-            {{.Before}}
-            </div>
-        </div>
-    </div>
-{{end}}
-</div>
-<div class="layui-row" style="margin-top:20px;margin-bottom: 10px;width: 100%;">
-    <div class="layui-col-xs1" style="width: 96%;">
-    {{range $k,$v := .nation}}
-    {{ if eq $k 0}}
-        <span style="color: white;font-size: 20px;">{{.}}</span>
-    {{else}}
-        <span style="color: #808080;font-size: 16px;margin-left: 5%;">{{.}}</span>
-    {{end}}
-    {{end}}
-    </div>
-    <div class="layui-col-xs1" style="width: 4%;">
-        <a href="/"><span style="color: #616263;font-size: 16px;color: #871C13;">更多</span></a>
-    </div>
-</div>
-<div class="layui-row">
-{{range .nationItem}}
-    <div class="layui-col-xs3" style="height: 100%;padding-right: 10px;">
-        <div class="img_tips effect">
-            <div class="image-box">
-                <img src="{{.Icon}}" alt="失效!">
-            </div>
-            <a href="/">
-                <div class="text-desc layui-col-md5">
-                    <h2>-------------</h2>
-                    </br>
-                    <h2>{{.Title}}</h2>
-                    </br>
-                    <h3>{{.Name}} {{.Year}}</h3>
-                    </br>
-                    <h2>-------------</h2>
+            <div class="layui-row" style="width: 100%;color:#808080;">
+                <div class="layui-col-xs3" style="width: 30%;">
+                    <img src="/static/img/like.png">{{.Like}}
                 </div>
-            </a>
-        </div>
-        <div class="layui-row" style="width: 100%;color:gray;">
-            <div class="layui-col-xs3" style="width: 30%;">
-                <img src="/static/img/like.png">{{.Like}}
-            </div>
-            <div class="layui-col-xs3" style="width: 40%;text-align: center;">
-                <img src="/static/img/follow.png">{{.Follow}}
-            </div>
-            <div class="layui-col-xs3" style="width: 30%;text-align: right;">
-                <img src="/static/img/info.png"/>{{.Info}}万
-            </div>
-        </div>
-        <div class="layui-row" style="color: #fffff9;">
-            <div class="layui-col-xs1" style="width: 80%;">
-                <img src="{{.User.Icon}}"
-                     class="layui-nav-img" style="width: 20px;height: 20px;">{{.User.Name}}
-            </div>
-            <div class="layui-col-xs1" style="width: 20%;">
-            {{.Before}}
-            </div>
-        </div>
-    </div>
-{{end}}
-</div>
-<div class="layui-row" style="margin-top:20px;margin-bottom: 10px;width: 100%;">
-    <div class="layui-col-xs1" style="width: 96%;">
-    {{range $k,$v := .audio}}
-    {{ if eq $k 0}}
-        <span style="color: white;font-size: 20px;">{{.}}</span>
-    {{else}}
-        <span style="color: #808080;font-size: 16px;margin-left: 5%;">{{.}}</span>
-    {{end}}
-    {{end}}
-    </div>
-    <div class="layui-col-xs1" style="width: 4%;">
-        <a href="/"><span style="color: #616263;font-size: 16px;color: #871C13;">更多</span></a>
-    </div>
-</div>
-<div class="layui-row">
-{{range .audioItem}}
-    <div class="layui-col-xs3" style="height: 100%;padding-right: 10px;">
-        <div class="img_tips effect">
-            <div class="image-box">
-                <img src="{{.Icon}}" alt="失效!">
-            </div>
-            <a href="/music">
-                <div class="text-desc layui-col-md5">
-                    <img src="/static/img/play.png" style="width: 30px;height: 30px;margin-top: 30%;"/>
+                <div class="layui-col-xs3" style="width: 40%;text-align: center;">
+                    <img src="/static/img/follow.png">{{.Follow}}
                 </div>
-            </a>
-        </div>
-        <div class="layui-row" style="width: 100%;color:gray;">
-            <div class="layui-col-xs3" style="width: 30%;">
-                <img src="/static/img/like.png">{{.Like}}
-            </div>
-            <div class="layui-col-xs3" style="width: 40%;text-align: center;">
-                <img src="/static/img/follow.png">{{.Follow}}
-            </div>
-            <div class="layui-col-xs3" style="width: 30%;text-align: right;">
-                <img src="/static/img/info.png"/>{{.Info}}万
-            </div>
-        </div>
-        <div class="layui-row" style="color: #fffff9;">
-            <div class="layui-col-xs1" style="width: 80%;">
-                <img src="{{.User.Icon}}"
-                     class="layui-nav-img" style="width: 20px;height: 20px;">{{.User.Name}}
-            </div>
-            <div class="layui-col-xs1" style="width: 20%;">
-            {{.Before}}
-            </div>
-        </div>
-    </div>
-{{end}}
-</div>
-<div class="layui-row" style="margin-top:20px;margin-bottom: 10px;">
-{{range $k,$v := .video}}
-{{ if eq $k 0}}
-    <span style="color: white;font-size: 20px;">{{.}}</span>
-{{else}}
-    <span style="color: #808080;font-size: 16px;margin-left: 5%;">{{.}}</span>
-{{end}}
-{{end}}
-</div>
-<div class="layui-row">
-{{range .videoItem}}
-    <div class="layui-col-xs3" style="height: 100%;padding-right: 10px;">
-        <div class="img_tips effect">
-            <div class="image-box">
-                <img src="{{.Icon}}" alt="失效!">
-            </div>
-            <a href="/video">
-                <div class="text-desc layui-col-md5">
-                    <img src="/static/img/play.png" style="width: 30px;height: 30px;margin-top: 30%;"/>
+                <div class="layui-col-xs3" style="width: 30%;text-align: right;">
+                    <img src="/static/img/info.png"/>{{.Info}}万
                 </div>
-            </a>
-        </div>
-        <div class="layui-row" style="width: 100%;color:gray;">
-            <div class="layui-col-xs3" style="width: 30%;">
-                <img src="/static/img/like.png">{{.Like}}
             </div>
-            <div class="layui-col-xs3" style="width: 40%;text-align: center;">
-                <img src="/static/img/follow.png">{{.Follow}}
-            </div>
-            <div class="layui-col-xs3" style="width: 30%;text-align: right;">
-                <img src="/static/img/info.png"/>{{.Info}}万
-            </div>
-        </div>
-        <div class="layui-row" style="color: #fffff9;">
-            <div class="layui-col-xs1" style="width: 80%;">
-                <img src="{{.User.Icon}}"
-                     class="layui-nav-img" style="width: 20px;height: 20px;">{{.User.Name}}
-            </div>
-            <div class="layui-col-xs1" style="width: 20%;">
-            {{.Before}}
-            </div>
-        </div>
-    </div>
-{{end}}
-</div>
-<div class="layui-row" style="margin-top:20px;margin-bottom: 10px;width: 100%;">
-    <div class="layui-col-xs1" style="width: 96%;">
-    {{range $k,$v := .original}}
-    {{ if eq $k 0}}
-        <span style="color: white;font-size: 20px;">{{.}}</span>
-    {{else}}
-        <span style="color: #808080;font-size: 16px;margin-left: 5%;">{{.}}</span>
-    {{end}}
-    {{end}}
-    </div>
-    <div class="layui-col-xs1" style="width: 4%;">
-        <a href="/"><span style="color: #616263;font-size: 16px;color: #871C13;">更多</span></a>
-    </div>
-</div>
-<div class="layui-row">
-{{range .originalItem}}
-    <div class="layui-col-xs3" style="height: 100%;padding-right: 10px;">
-        <div class="img_tips effect">
-            <div class="image-box">
-                <img src="{{.Icon}}" alt="失效!">
-            </div>
-            <a href="/">
-                <div class="text-desc layui-col-md5">
-                    <h2>-------------</h2>
-                    </br>
-                    <h2>{{.Title}}</h2>
-                    </br>
-                    <h3>{{.Name}} {{.Year}}</h3>
-                    </br>
-                    <h2>-------------</h2>
+            <div class="layui-row" style="color: #fffff9;">
+                <div class="layui-col-xs1" style="width: 80%;">
+                    <img src="{{.icon}}"
+                         class="layui-nav-img" style="width: 20px;height: 20px;">{{.nick}}
                 </div>
-            </a>
-        </div>
-        <div class="layui-row" style="width: 100%;color:gray;">
-            <div class="layui-col-xs3" style="width: 30%;">
-                <img src="/static/img/like.png">{{.Like}}
-            </div>
-            <div class="layui-col-xs3" style="width: 40%;text-align: center;">
-                <img src="/static/img/follow.png">{{.Follow}}
-            </div>
-            <div class="layui-col-xs3" style="width: 30%;text-align: right;">
-                <img src="/static/img/info.png"/>{{.Info}}万
-            </div>
-        </div>
-        <div class="layui-row" style="color: #fffff9;">
-            <div class="layui-col-xs1" style="width: 80%;">
-                <img src="{{.User.Icon}}"
-                     class="layui-nav-img" style="width: 20px;height: 20px;">{{.User.Name}}
-            </div>
-            <div class="layui-col-xs1" style="width: 20%;">
-            {{.Before}}
-            </div>
-        </div>
-    </div>
-{{end}}
-</div>
-<div class="layui-row" style="margin-top:20px;margin-bottom: 10px;width: 100%;">
-    <div class="layui-col-xs1" style="width: 96%;">
-    {{range $k,$v := .question}}
-    {{ if eq $k 0}}
-        <span style="color: white;font-size: 20px;">{{.}}</span>
-    {{else}}
-        <span style="color: #808080;font-size: 16px;margin-left: 5%;">{{.}}</span>
-    {{end}}
-    {{end}}
-    </div>
-    <div class="layui-col-xs1" style="width: 4%;">
-        <a href="/"><span style="color: #616263;font-size: 16px;color: #871C13;">更多</span></a>
-    </div>
-</div>
-<div class="layui-row">
-{{range .questionItem}}
-    <div class="layui-col-xs3" style="height: 100%;padding-right: 10px;">
-        <div class="img_tips effect">
-            <div class="image-box">
-                <img src="{{.Icon}}" alt="失效!">
-            </div>
-            <a href="/">
-                <div class="text-desc layui-col-md5">
-                    <h2>-------------</h2>
-                    </br>
-                    <h2>{{.Title}}</h2>
-                    </br>
-                    <h3>{{.Name}} {{.Year}}</h3>
-                    </br>
-                    <h2>-------------</h2>
+                <div class="layui-col-xs1" style="width: 20%;">
+                {{.Before}}
                 </div>
-            </a>
-        </div>
-        <div class="layui-row" style="width: 100%;color:gray;">
-            <div class="layui-col-xs3" style="width: 30%;">
-                <img src="/static/img/like.png">{{.Like}}
             </div>
-            <div class="layui-col-xs3" style="width: 40%;text-align: center;">
-                <img src="/static/img/follow.png">{{.Follow}}
             </div>
-            <div class="layui-col-xs3" style="width: 30%;text-align: right;">
-                <img src="/static/img/info.png"/>{{.Info}}万
+        {{else if eq "1" $v.blog.format }}
+            <div class="layui-col-xs3" style="height: 100%;padding-right: 10px;">
+            <div class="img_tips effect">
+                <div class="image-box">
+                    <img src="{{.Icon}}" alt="失效!">
+                </div>
+                <a href="/blog?channelId={{.id}}">
+                    <div class="text-desc layui-col-md5">
+                        <img src="/static/img/play.png" style="width: 30px;height: 30px;margin-top: 30%;"/>
+                    </div>
+                </a>
             </div>
-        </div>
-        <div class="layui-row" style="color: #fffff9;">
-            <div class="layui-col-xs1" style="width: 80%;">
-                <img src="{{.User.Icon}}"
-                     class="layui-nav-img" style="width: 20px;height: 20px;">{{.User.Name}}
+            <div class="layui-row" style="width: 100%;color:gray;">
+                <div class="layui-col-xs3" style="width: 30%;">
+                    <img src="/static/img/like.png">{{.Like}}
+                </div>
+                <div class="layui-col-xs3" style="width: 40%;text-align: center;">
+                    <img src="/static/img/follow.png">{{.Follow}}
+                </div>
+                <div class="layui-col-xs3" style="width: 30%;text-align: right;">
+                    <img src="/static/img/info.png"/>{{.Info}}万
+                </div>
             </div>
-            <div class="layui-col-xs1" style="width: 20%;">
-            {{.Before}}
+            <div class="layui-row" style="color: #fffff9;">
+                <div class="layui-col-xs1" style="width: 80%;">
+                    <img src="{{.User.Icon}}"
+                         class="layui-nav-img" style="width: 20px;height: 20px;">{{.User.Name}}
+                </div>
+                <div class="layui-col-xs1" style="width: 20%;">
+                {{.Before}}
+                </div>
             </div>
-        </div>
-    </div>
-{{end}}
+            </div>
+        {{else if eq "2" $v.blog.format }}
+            <div class="layui-col-xs3" style="height: 100%;padding-right: 10px;">
+            <div class="img_tips effect">
+                <div class="image-box">
+                    <img src="{{.Icon}}" alt="失效!">
+                </div>
+                <a href="/blog?channelId={{.id}}">
+                    <div class="text-desc layui-col-md5">
+                        <img src="/static/img/play.png" style="width: 30px;height: 30px;margin-top: 30%;"/>
+                    </div>
+                </a>
+            </div>
+            <div class="layui-row" style="width: 100%;color:gray;">
+                <div class="layui-col-xs3" style="width: 30%;">
+                    <img src="/static/img/like.png">{{.Like}}
+                </div>
+                <div class="layui-col-xs3" style="width: 40%;text-align: center;">
+                    <img src="/static/img/follow.png">{{.Follow}}
+                </div>
+                <div class="layui-col-xs3" style="width: 30%;text-align: right;">
+                    <img src="/static/img/info.png"/>{{.Info}}万
+                </div>
+            </div>
+            <div class="layui-row" style="color: #fffff9;">
+                <div class="layui-col-xs1" style="width: 80%;">
+                    <img src="{{.User.Icon}}"
+                         class="layui-nav-img" style="width: 20px;height: 20px;">{{.User.Name}}
+                </div>
+                <div class="layui-col-xs1" style="width: 20%;">
+                {{.Before}}
+                </div>
+            </div>
+            </div>
+        {{else}}
+            <div class="layui-col-xs3" style="height: 100%;padding-right: 10px;">
+            <div class="img_tips effect">
+                <div class="image-box">
+                    <img src="{{.Icon}}" alt="失效!">
+                </div>
+                <a href="/blog?channelId={{.id}}">
+                    <div class="text-desc layui-col-md5">
+                        <img src="/static/img/play.png" style="width: 30px;height: 30px;margin-top: 30%;"/>
+                    </div>
+                </a>
+            </div>
+            <div class="layui-row" style="width: 100%;color:gray;">
+                <div class="layui-col-xs3" style="width: 30%;">
+                    <img src="/static/img/like.png">{{.Like}}
+                </div>
+                <div class="layui-col-xs3" style="width: 40%;text-align: center;">
+                    <img src="/static/img/follow.png">{{.Follow}}
+                </div>
+                <div class="layui-col-xs3" style="width: 30%;text-align: right;">
+                    <img src="/static/img/info.png"/>{{.Info}}万
+                </div>
+            </div>
+            <div class="layui-row" style="color: #fffff9;">
+                <div class="layui-col-xs1" style="width: 80%;">
+                    <img src="{{.User.Icon}}"
+                         class="layui-nav-img" style="width: 20px;height: 20px;">{{.User.Name}}
+                </div>
+                <div class="layui-col-xs1" style="width: 20%;">
+                {{.Before}}
+                </div>
+            </div>
+            </div>  
+        {{end}}
+    {{end}}
 </div>
+<script>
+layui.use('flow', function(){
+  var flow = layui.flow;
+  // 按屏加载图片
+  flow.lazyimg({
+    elem: '#channelFlow img'
+    ,scrollElem: '#channelFlow' //一般不用设置，此处只是演示需要。
+  });
+  
+});
+</script>

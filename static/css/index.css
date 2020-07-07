@@ -10,6 +10,10 @@ body {
     font-family: "Microsoft YaHei", "宋体", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif, FreeSans, Arimo;
 }
 
+a{color:yellow;}
+.bar-wrapper {height: 300px; position: relative;}
+.bar {position: relative; bottom: 0; width: 5px; display: inline-block; border: 1px solid red; height: 5px; border-bottom: 3px solid #fff
+
 .content {
     width: 80%;
     margin-left: 10%;

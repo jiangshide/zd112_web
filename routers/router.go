@@ -26,4 +26,6 @@ func init() {
 	beego.ErrorController(&controllers.ErrorController{})
 
 	beego.Router("/add", &controllers.AppController{}, "*:Add")
+
+	beego.Router("/blog",&controllers.BlogController{})
 }

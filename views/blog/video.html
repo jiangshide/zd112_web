@@ -1,0 +1,65 @@
+<div class="content layui-row" style="margin-bottom: 30px;">
+    <div class="layui-col-md8">
+    <video id="video" controls="controls" preload="none" autoplay="autoplay"
+                       poster="{{.url}}" style="margin: 0px;">
+                    <source id="mp4" src="{{.url}}" type="video/mp4">
+                    <p>Your user agent does not support the HTML5 Video element.</p>
+                </ul>
+                </video>
+    {{template "comm/comment.html" .}}
+    </div>
+    <div class="layui-col-md4">
+        <div class="layui-row" style="padding-top: 20px;">
+            <div class="layui-col-xs3" style="text-align: right;">
+              <img src="{{.icon}}" class="" style="width:100px; height:100px; border-radius:100%;" />
+            </div>
+            <div class="layui-col-xs9" style="margin-top: 20px;color: white;padding-left: 15px;">
+                <div class="layui-row">
+                    <button type="button" class="layui-btn layui-btn-normal" style="margin-bottom:10px;">关注</button>
+                    </br>
+                    <span>{{.nick}} · <img src="/static/img/sex_man.png" style="width: 20px;height: 20px;"> . {{.ucity}}</span>
+                </div>    
+            </div>
+        </div>
+        <div style="color: white;margin-top:25px;margin-right: 18%;">
+            <div class="layui-col-xs6">
+            <span class="layui-badge-dot layui-bg-blue"></span>   
+                {{.nick}}的推荐
+            </div>
+            <div class="layui-col-xs6" style="text-align: right;">
+                ->更多
+            </div>
+             </br>
+            <div class="site-demo-flow" id=recommendFlow>
+                {{range .recommends}}
+                <div class="layui-col-xs6" style="height: 100%;padding: 5px;">    
+                    <div class="img_tips effect" style="height: 80%;background-color: #353535;">
+                        <div class="" style="background-color: #1296db;">
+                            <img src="{{.cover}}" alt="{{.name}}" style="height:160px;background-color: #33353f;">
+                            <span style="padding-bottom: 20px;background-color: #1296db;"># {{.channel}}</span>
+                        </div>
+                        <a href="/blog?id={{.id}}">
+                            <div class="text-desc layui-col-md9"> 
+                                <h2>{{.title}}</h2>
+                                </br>
+                                <h3>{{.des}}</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+        </div>
+    </div>
+</div>  
+<script>
+layui.use('flow', function(){
+  var flow = layui.flow;
+  // 按屏加载图片
+  flow.lazyimg({
+    elem: '#recommendFlow img'
+    ,scrollElem: '#recommendFlow' //一般不用设置，此处只是演示需要。
+  });
+  
+});
+</script>

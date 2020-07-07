@@ -1,0 +1,60 @@
+<div class="content layui-row" style="width: 100%;margin: 0px;padding: 0px;color: white;">
+	<div class="layui-col-xs12" style="padding: 0px;">
+		<div class="layui-row" style="width: 100%;">
+			<div class="layui-col-xs3">
+				<div style="width: fit-content;height:25px;padding: 3px;background-color:#1296db;border-radius:5px;text-align: center;margin: 10px;overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;">
+					# {{.channel}}		
+				</div>
+            </div>  
+        	<div class="layui-col-xs7" style="margin-top: 5px;text-align: center;">
+                <div class="layui-col-xs3">
+            	<img src="/static/img/unlike_write.png" width="30" height="30"> {{.praiseNum}}
+                </div>
+                <div class="layui-col-xs3">
+            	<img src="/static/img/ic_blog_view_count.png" width="30" height="30" style="margin-left: 20px;"> {{.viewNum}}
+                </div>
+                <div class="layui-col-xs3">
+            	<img src="/static/img/tab_icon_chat_def.png" width="30" height="30" style="margin-left: 20px;" /> {{.commentNum}}
+                </div>
+                <div class="layui-col-xs3">
+            	<img src="/static/img/share.png" width="30" height="30" style="margin-left: 20px;" /> {{.shareNum}}
+                </div>
+            </div>
+            <div class="layui-col-xs2" style="padding-left: 10px;margin-top: 10px;">
+                {{.date}}
+            </div>
+       	</div>
+    </div>
+    <span style="font-size:20px;color: white;margin: 20px;">{{.title}}</span>
+    <img src="/static/img/unlocation.png" width="30" height="30" style="text-align: left;"> {{.ucity}}
+    </br>
+    <span style="font-size: 9px;color: #FFFFF0;margin: 20px;">{{.des}}</span>
+    
+    <form class="layui-form" action="" style="margin-top: 10px;">
+		<div>
+	    	<div class="layui-input-inline">
+	      		<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="喜欢就评论告诉TA" class="layui-input" style="width: 600px;margin-left: 20px;">
+	    	</div>
+	    	<button type="button" class="layui-btn layui-btn-normal">发送</button>
+	  	</div>
+	</form>
+    {{range .comments}}
+    <div class="layui-row" style="padding-top: 20px;padding-left: 0px;margin: 0px;">
+        <div class="layui-col-xs1" style="text-align: center;">
+            <img src="{{.icon}}" class="" style="width:40px; height:40px; border-radius:100%;" />
+        </div>
+        <div class="layui-col-xs11" style="color: white;">
+            <div class="layui-row">
+                <span style="font-size:16px;color: white;">{{.nick}} · <img src="/static/img/sex_man.png" width="15" height="15"></span>
+                </br>
+                <span style="font-size: 9px;color: #FFFFF0;">{{.content}}</span>
+            </div>    
+        </div>
+    </div>  
+    {{end}}   
+    <div class="layui-row" style="width: 100%;text-align: center;">
+        <span style="text-align: center;">更多...</span>
+    </div>   
+</div>

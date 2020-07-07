@@ -1,30 +1,28 @@
 {{template "comm/head.html" .}}
 {{template "comm/nav.html" .}}
 <div class="content layui-row">
-    <div class="layui-col-md8" style="text-align: center;">
-        <h1>标题</h1>
-        <h3>这是测试</h3>
-        <video id="video" controls="" preload="none"
-               poster="http://media.w3.org/2010/05/sintel/poster.png">
-            <source id="mp4" src="http://10.20.7.21:8080/static/video/test.mp4" type="video/mp4">
-            <p>Your user agent does not support the HTML5 Video element.</p>
-        </video>
-    </div>
-    <div class="layui-col-md4" style="text-align: center;">
-        <h2>详细内容</h2>
-        <h4>今天...</h4>
-        <h4>今天...</h4>
-        <h4>今天...</h4>
-        <h4>今天...</h4>
-        <h4>今天...</h4>
-        <h4>今天...</h4>
-        <h4>今天...</h4>
-        <h4>今天...</h4>
-        <h4>今天...</h4>
-        <h4>今天...</h4>
-        <h4>今天...</h4>
-        <h4>今天...</h4>
-        <h4>今天...</h4>
-    </div>
-</div>
+            <div class="layui-col-md8" style="text-align: center;">
+                <video id="video" controls="" preload="none"
+                       poster="http://media.w3.org/2010/05/sintel/poster.png" style="margin: 0px;">
+                    <source id="mp4" src="http://zd112.oss-cn-beijing.aliyuncs.com/audio/%E8%B7%AF%E5%A4%AA%E8%BF%9C-%E5%8D%8E%E8%B0%A6-28602666.mp3" type="video/mp4">
+                    <p>Your user agent does not support the HTML5 Video element.</p>
+                </video>
+            </div>
+            <div class="layui-col-md4" style="text-align: center;">
+                <h2>详细内容</h2>
+                <h4>{{.nick}}</h4>
+                <h4>{{.nick}}</h4>
+                <h4>{{.icon}}</h4>
+                <h4>今天...</h4>
+                <h4>今天...</h4>
+                <h4>今天...</h4>
+                <h4>今天...</h4>
+                <h4>今天...</h4>
+                <h4>今天...</h4>
+                <h4>今天...</h4>
+                <h4>今天...</h4>
+                <h4>今天...</h4>
+                <h4>今天...</h4>
+            </div>
+        </div>
 {{template "comm/foot.html" .}}

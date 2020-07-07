@@ -9,6 +9,7 @@ type Channel struct {
 	ChannelTypeId int  `json:"typeId"`//频道类型ID
 	ChannelNatureId int `json:"natureId"`//频道所属ID
 	Cover string `json:"cover"`//封面
+	BlogCover string `json:"blogCover"`//封面:最后一个动态的封面
 	Name string `json:"name"`//频道名称
 	Des string `json:"des"`//频道描述
 	Status int `json:"status"` //状态:0~未审核,1~审核中,2~审核通过,-1~移到回忆箱,-2~审核拒绝,-3～禁言，-4~关闭/折叠,-5~被投诉
@@ -35,18 +36,18 @@ var CHANNEL_STATUS=ChannelSql+CHANNEL_COMMON+CHANNEL_LEFT+"WHERE C.status=? "+CH
 
 var CHANNEL_LEFT="FROM zd_channel C LEFT JOIN zd_user_profile P ON P.id=C.uid "
 var CHANNEL_COMMON=",(SELECT COUNT(1) FROM zd_blog WHERE channel_id=C.id) blogNum,(SELECT name FROM zd_user_remarks WHERE uid=C.uid AND from_id=? ) remark,(SELECT status FROM zd_channel_top WHERE channel_id=C.id AND uid=? ) tops,(SELECT status FROM zd_user_follow WHERE from_id=C.uid AND uid=? ) follows,(SELECT reason FROM zd_report WHERE content_id=C.id AND uid=? ) reportr "
-var ChannelSql="SELECT C.id,C.uid,C.channel_type_id typeId,C.channel_nature_id natureId,C.cover,C.name,C.des,C.status,C.official,C.reason,C.update_time date,P.icon,P.nick,P.latitude,P.longitude,P.location_type locationType	 "
+var ChannelSql="SELECT C.id,C.uid,C.channel_type_id typeId,C.channel_nature_id natureId,C.cover,C.blog_cover blogCover,C.name,C.des,C.status,C.official,C.reason,C.update_time date,P.icon,P.nick,P.latitude,P.longitude,P.location_type locationType	 "
 
 var CHANNEL_ORDERBY_TIIME="order by C.update_time DESC limit ? offset ?"
 
 func Channels(uid int64,sql string,ids interface{})(maps *[]orm.Params,id int64,err error){
 	maps,id,err = SqlList(sql,ids)
-	beego.Info("err:",err," | id:",id)
+	beego.Info("jsd~maps:",maps,"err:",err," | id:",id," | sql:",sql," | ids:",ids)
 	if err != nil || id == 0{
 		return
 	}
 	for _,v := range (*maps){
-		res,_,_ := Sql(BLOG_CHANNEL, [...]interface{}{uid,uid,uid,uid,uid,v["id"]})
+		res,_,err := Sql(BLOG_CHANNEL, [...]interface{}{uid,uid,uid,uid,uid,v["id"]})
 		// beego.Info("err:",err," | res:",res," | ids:",ids)
 		if err == nil {
 			v["blog"] = res
@@ -193,6 +194,7 @@ func InitChannelType(){
 
 var CHANNEL_TYPE_ID=ChannelSql+CHANNEL_COMMON+CHANNEL_LEFT+"WHERE C.status=2 AND C.channel_type_id=? "+CHANNEL_ORDERBY_TIIME//频道所属类型:uid,uid,uid,uid,channel_type_id,limit,offset
 
+
 func (this *ChannelType) TableName() string {
 	return TableName("channel_type")
 }
@@ -256,9 +258,15 @@ type ChannelRecommend struct {
 
 var CHANNEL_OFFICIAL=ChannelSql+CHANNEL_COMMON+CHANNEL_LEFT+"WHERE C.status=2 AND C.official IN(1,2) "+CHANNEL_ORDERBY_TIIME//官方推荐:uid,uid,uid,uid,limit,offset
 
-var CHANNEL_RECOMMEND_UID=ChannelSql+CHANNEL_COMMON+"FROM zd_channel_recommend CR LEFT JOIN zd_channel C ON C.id=CR.channel_id LEFT JOIN zd_user_profile UP ON UP.id=CR.uid WHERE C.status=2 AND CR.uid=? AND CR.status IN(1,2) "+CHANNEL_ORDERBY_TIIME//针对用户推荐～高~重点处理:uid,uid,uid,uid,uid,limit,offset
-var CHANNEL_RECOMMEND_UNFOLLOW=ChannelSql+CHANNEL_COMMON+"FROM zd_channel_recommend CR LEFT JOIN zd_channel C ON C.id=CR.channel_id LEFT JOIN zd_user_profile UP ON UP.id=CR.uid WHERE C.status=2 AND CR.status NOT IN(1,2) "+CHANNEL_ORDERBY_TIIME//针对已推荐的推荐~中:uid,uid,uid,uid,limit,offset
-var CHANNEL_RECOMMEND_ALL=ChannelSql+CHANNEL_COMMON+CHANNEL_LEFT+"WHERE C.status=2 AND C.uid != ?"+CHANNEL_ORDERBY_TIIME//推荐所有~低:uid,uid,uid,uid,uid,limit,offset
+var CHANNEL_HOT=ChannelSql+CHANNEL_COMMON+CHANNEL_LEFT+"WHERE C.status=2 ORDER BY follows DESC limit ? offset ?"//最多关注的频道频道:uid,uid,uid,uid,limit,offset
+var CHANNEL_NEW=ChannelSql+CHANNEL_COMMON+CHANNEL_LEFT+"WHERE C.status=2 ORDER BY C.update_time limit ? offset ?"//最新发布的频道:uid,uid,uid,uid,limit,offset
+var CHANNEL_MOST=ChannelSql+CHANNEL_COMMON+CHANNEL_LEFT+"WHERE C.status=2 ORDER BY C.blogNum limit ? offset ?"//最多动态的频道:uid,uid,uid,uid,limit,offset
+var CHANNEL_LIKE=ChannelSql+CHANNEL_COMMON+CHANNEL_LEFT+"WHERE C.status=2 ORDER BY C.update_time limit ? offset ?"//最新频道:uid,uid,uid,uid,limit,offset
+
+
+var CHANNEL_RECOMMEND_UID=ChannelSql+CHANNEL_COMMON+"FROM zd_channel_recommend CR LEFT JOIN zd_channel C ON C.id=CR.channel_id LEFT JOIN zd_user_profile P ON P.id=CR.uid WHERE C.status=2 AND CR.uid=? AND CR.status IN(1,2) "+CHANNEL_ORDERBY_TIIME//针对用户推荐～高~重点处理:uid,uid,uid,uid,uid,limit,offset
+var CHANNEL_RECOMMEND_UNFOLLOW=ChannelSql+CHANNEL_COMMON+"FROM zd_channel_recommend CR LEFT JOIN zd_channel C ON C.id=CR.channel_id LEFT JOIN zd_user_profile P ON P.id=CR.uid WHERE C.status=2 AND CR.status NOT IN(1,2) "+CHANNEL_ORDERBY_TIIME//针对已推荐的推荐~中:uid,uid,uid,uid,limit,offset
+var CHANNEL_RECOMMEND_ALL=ChannelSql+CHANNEL_COMMON+CHANNEL_LEFT+"WHERE C.status=2 AND C.uid != ? "+CHANNEL_ORDERBY_TIIME//推荐所有~低:uid,uid,uid,uid,uid,limit,offset
 
 func (this *ChannelRecommend) TableName() string {
 	return TableName("channel_recommend")

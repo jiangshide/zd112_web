@@ -1,27 +1,14 @@
 {{template "comm/head.html" .}}
-<div class="layui-row">
 {{template "comm/top.html" .}}
-    <dir>
-        {{template "comm/right.html" .}}  
-    </dir>
-    <div class="banner" style="top: 50;">
+{{template "comm/right.html" .}}        
+<div class="banner" style="top: 50;">
     {{template "comm/banner.html" .}}
-    </div>
-    <div>
+</div>
+{{template "comm/group.html" .}}
+<div> 
     {{template "comm/nav.html" .}}
-    </div>
-    <div class="content">
-
-        <div class="layui-row" style="height: 150px;margin-top: 10px;text-align:center;font-size: 20px;color: white;">
-        {{range $k,$v := .group}}
-            <div class="layui-col-xs3" style="height: 100%;padding-right: 5px;padding-left: 5px;">
-                <div style="height: 100%;background-image: url('{{$k}}');padding-top: 100px;">
-                    <span id="scale">{{$v}}</span>
-                </div>
-            </div>
-        {{end}}
-        </div>
+</div>
+<div class="content">
     {{template "comm/content.html" .}}
-    </div>
 </div>
 {{template "comm/foot.html" .}}

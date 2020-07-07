@@ -1,23 +1,22 @@
 <div class="layui-row" style="width: 80%;
     margin-left: 10%;
     margin-right: 10%;
-    padding-right: 5px;
-    padding-left: 5px;
     text-align: center;
+    background-color: #33353f;
     "
     >
-    <ul class="nav" style="background: #1F1E23;
+    <ul class="nav" style="background: #33353f;
     font: bold 20px/30px sans-serif;
     margin-left: 5px;">        
     {{range $k,$v := .nav}}
         <li style="float: left;
     position: relative;
     margin-right: 2px;
-    background: #1F1E23;
+    background: #33353f;
     text-align: center;
     margin-top: 5px;
     width: 79px;">
-            <a href="/?id={{$v.id}}" style="width: 100%;">{{$v.name}}</a>
+            <a href="/?id={{$v.id}}&page={{.page}}&pageSize={{.pageSize}}" style="width: 100%;">{{$v.name}}</a>
         </li>
     {{end}}
     </ul>
