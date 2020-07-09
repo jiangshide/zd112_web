@@ -9,14 +9,19 @@ white-space: nowrap;">
 				</div>
             </div>  
         	<div class="layui-col-xs7" style="margin-top: 5px;text-align: center;">
-                <div class="layui-col-xs3">
-            	<img src="/static/img/unlike_write.png" width="30" height="30"> {{.praiseNum}}
+                <div class="layui-col-xs3" onclick="praise({{.id}})">
+            	{{if compare 1 .praises}}
+                    <img src="/static/img/liked.png" width="30" height="30" style="color: red;">
+                {{else}}
+                    <img src="/static/img/unlike.png" width="30" height="30">
+                {{end}}
+                {{.praiseNum}}
                 </div>
                 <div class="layui-col-xs3">
-            	<img src="/static/img/ic_blog_view_count.png" width="30" height="30" style="margin-left: 20px;"> {{.viewNum}}
+            	<img src="/static/img/view.png" width="30" height="30" style="margin-left: 20px;"> {{.viewNum}}
                 </div>
                 <div class="layui-col-xs3">
-            	<img src="/static/img/tab_icon_chat_def.png" width="30" height="30" style="margin-left: 20px;" /> {{.commentNum}}
+            	<img src="/static/img/msg.png" width="30" height="30" style="margin-left: 20px;" /> {{.commentNum}}
                 </div>
                 <div class="layui-col-xs3">
             	<img src="/static/img/share.png" width="30" height="30" style="margin-left: 20px;" /> {{.shareNum}}
@@ -35,26 +40,59 @@ white-space: nowrap;">
     <form class="layui-form" action="" style="margin-top: 10px;">
 		<div>
 	    	<div class="layui-input-inline">
-	      		<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="喜欢就评论告诉TA" class="layui-input" style="width: 600px;margin-left: 20px;">
+	      		<input type="text" name="title" lay-verify="title" autocomplete="on" placeholder="喜欢就评论告诉TA" class="layui-input" style="width: 600px;margin-left: 20px;" id="{{.id}}">
 	    	</div>
-	    	<button type="button" class="layui-btn layui-btn-normal">发送</button>
+	    	<button type="button" class="layui-btn layui-btn-normal" onclick="sendMsg({{.id}})">发送</button>
 	  	</div>
 	</form>
+    {{.sendMsg}}
     {{range .comments}}
     <div class="layui-row" style="padding-top: 20px;padding-left: 0px;margin: 0px;">
         <div class="layui-col-xs1" style="text-align: center;">
-            <img src="{{.icon}}" class="" style="width:40px; height:40px; border-radius:100%;" />
+            <img src="{{.icon}}" class="" style="width:50px; height:50px; border-radius:100%;" />
         </div>
         <div class="layui-col-xs11" style="color: white;">
             <div class="layui-row">
+                <div class="layui-col-xs10"> 
                 <span style="font-size:16px;color: white;">{{.nick}} · <img src="/static/img/sex_man.png" width="15" height="15"></span>
                 </br>
+                <div style="margin-top: 10px;">
                 <span style="font-size: 9px;color: #FFFFF0;">{{.content}}</span>
+                </div>
+                </div>
+                <div class="layui-col-xs2" style="text-align: left;">
+                    {{.date}}</br>
+                    回复
+                </div>
             </div>    
         </div>
     </div>  
     {{end}}   
-    <div class="layui-row" style="width: 100%;text-align: center;">
+    <div class="layui-row" style="width: 100%;text-align: center;margin-top: 20px;">
         <span style="text-align: center;">更多...</span>
     </div>   
 </div>
+<script>
+var $ = layui.jquery;
+function praise(id){
+        $.post('{{urlfor "BlogController.AjaxPraise"}}',"id="+id, function (out) {
+                if (out.code == 0) {
+                    window.location.reload()
+                } else {
+                    layer.msg(out.msg)      
+                }
+            }, "json");
+}
+
+function sendMsg(id){
+    var content = document.getElementById(id).value;
+        $.post('{{urlfor "BlogController.AjaxCommendAdd"}}',"contentId="+id+"&content="+content, function (out) {
+                if (out.code == 0) {
+                    // $("#jsd20").load(location.href+"&jsd=2" + " #jsd20")
+                    window.location.reload()
+                } else {
+                    layer.msg(out.msg)      
+                }
+            }, "json");
+}
+</script>

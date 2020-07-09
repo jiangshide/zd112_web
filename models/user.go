@@ -471,12 +471,12 @@ func (this *UserFollow) Update() (int64, error) {
 	return orm.NewOrm().Update(this)
 }
 
-func (this *UserFollow) ReadOrCreates()(created bool, id int64, err error){
+func (this *UserFollow) ReadOrCreates()(status int, id int64, err error){
 	follow:=UserFollow{Uid:this.Uid,FromId:this.FromId}
-	created,id,err = orm.NewOrm().ReadOrCreate(&follow,"uid","from_id")
-	follow.Status = this.Status
+	_,id,err = orm.NewOrm().ReadOrCreate(&follow,"uid","from_id")
+	follow.Status = 1-follow.Status
 	id,err = follow.Update()
-	return
+	return follow.Status,id,err
 }
 
 type UserRecommend struct {

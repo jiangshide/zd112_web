@@ -10,8 +10,6 @@ import (
 	"strconv"
 	"time"
 	"net"
-	"math"
-	"bytes"
 )
 
 type BaseController struct {
@@ -168,8 +166,8 @@ func (this *BaseController) display(tpl ...string) {
 
 func (this *BaseController) ajaxMsg(msg interface{}, code int) {
 	out := make(map[string]interface{})
-	out["status"] = code
-	out["message"] = msg
+	out["code"] = code
+	out["msg"] = msg
 	this.Data["json"] = out
 	this.ServeJSON()
 	this.StopRun()
@@ -189,8 +187,8 @@ func (this *BaseController) ajaxList(msg interface{}, code int, count int64, dat
 
 func (this *BaseController) ajaxMsgFile(msg interface{}, size, reSize int64, code int) {
 	out := make(map[string]interface{})
-	out["status"] = code
-	out["message"] = msg
+	out["code"] = code
+	out["msg"] = msg
 	out["size"] = size
 	out["resize"] = reSize
 	this.Data["json"] = out
@@ -304,40 +302,6 @@ func (this *BaseController) list(nl [][]NavListItem, arr ...string) {
 	}
 }
 
-// func (this *BaseController) university(index int) []string {
-// 	university := []string{"学府", "诗词", "史书典籍", "诗词周边", "美文阅读", "书法欣赏", "其它"}
-// 	return university[index:]
-// }
-
-// func (this *BaseController) nation(index, end int) []string {
-// 	nation := []string{"民族", "阿昌族", "白族", "保安族", "布朗族", "布依族", "藏族", "朝鲜族", "达翰尔族", "傣族", "昂德族", "东乡族", "侗族", "独龙族", "俄罗斯族", "鄂伦春族", "鄂温克族", "高山族", "哈尼族", "哈萨克族", "汉族", "赫哲族", "回族", "基诺族", "京族",
-// 		"景颇族", "柯尔克孜族", "拉祜族", "黎族", "傈僳族", "珞巴族", "满族", "毛南族", "门巴族", "蒙古族", "苗族", "仫佬族", "纳西族", "怒族", "普米族", "羌族", "撒拉族", "畲族", "水族", "塔吉克族", "塔塔尔族", "土家族", "图族", "佤族", "维吾尔族", "乌孜别克族", "锡伯族", "瑶族", "彝族", "仡佬族", "裕固族", "壮族"}
-// 	if end > 0 {
-// 		return nation[index:end]
-// 	}
-// 	return nation[index:]
-// }
-
-// func (this *BaseController) audio(index int) []string {
-// 	audio := []string{"音乐", "古琴", "琵琶", "古筝", "笛子", "葫芦丝", "芦笋", "现代流行曲", "古典", "经典"}
-// 	return audio[index:]
-// }
-
-// func (this *BaseController) video(index int) []string {
-// 	video := []string{"视频", "短视频", "长视频", "MV"}
-// 	return video[index:]
-// }
-
-// func (this *BaseController) original(index int) []string {
-// 	original := []string{"原创", "手工艺", "摄影", "纯艺术", "服装", "视频", "音乐"}
-// 	return original[index:]
-// }
-
-// func (this *BaseController) question(index int) []string {
-// 	question := []string{"题库", "英语", "数学", "物理", "化学", "政治", "生物", "地理", "语文", "历史"}
-// 	return question[index:]
-// }
-
 type Group struct{
 	Id int `json:"id"`
 	BlogNum string `json:"blogNum"`
@@ -424,66 +388,3 @@ func (this *BaseController) nav() {
 	this.Data["page"]=this.page
 	this.Data["pageSize"] = this.pageSize
 }
-
-// func TimeStamp(str string)int64{
-// 	beego.Info("-------str:",str)
-// 	date,_ := time.Parse("2006-01-02 15:04:05",str)
-// 	return date.Unix()
-// }
-
-// /**
-// * @des 时间转换函数
-// * @param atime string 要转换的时间戳（秒）
-// * @return string
-// */
-// func StrTime (atime int64) string{
-//     var byTime = []int64{365*24*60*60,24*60*60,60*60,60,1}
-//     var unit = []string{"年前","天前","小时前","分钟前","秒钟前"}
-//     now := time.Now().Unix()
-//     ct := now - atime
-//     if ct < 0{
-//         return "刚刚"
-//     }
-//     var res string
-//     for i := 0;i < len(byTime);i++{
-//         if ct < byTime[i]{
-//             continue
-//         }
-//         var temp = math.Floor(float64(ct / byTime[i]))
-//         ct = ct % byTime[i];
-//         if temp > 0 {
-//             var tempStr string
-//             tempStr = strconv.FormatFloat(temp,'f',-1,64)
-//             res = MergeString(tempStr,unit[i]) //此处调用了一个我自己封装的字符串拼接的函数（你也可以自己实现）
-//         }
-//         break//我想要的形式是精确到最大单位，即："2天前"这种形式，如果想要"2天12小时36分钟48秒前"这种形式，把此处break去掉，然后把字符串拼接调整下即可（别问我怎么调整，这如果都不会我也是无语）
-//     }
-//     return res
-// }
-
-// /**
-// * @des 拼接字符串
-// * @param args ...string 要被拼接的字符串序列
-// * @return string
-// */
-// func MergeString (args ...string) string {
-//     buffer := bytes.Buffer{}
-//     for i:=0; i<len(args); i++ {
-//         buffer.WriteString(args[i])
-//     }
-//     return buffer.String()
-// }
-
-// func ShowNum(str string)string{
-// 	num,_ := strconv.Atoi(str);
-// 	if num >= 100000000{
-// 		return strconv.Itoa(num/100000000.0)+"亿"
-// 	}
-// 	if num >= 10000 {
-// 		return strconv.Itoa(num/10000.0) +"万"		
-// 	}
-// 	if num >= 1000 {
-// 		return strconv.Itoa(num/1000.0)+"千"
-// 	}
-// 	return strconv.Itoa(num)
-// }

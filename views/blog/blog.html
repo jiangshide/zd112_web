@@ -5,7 +5,7 @@
 <div> 
     {{template "comm/nav.html" .}}
 </div>
-<div class="site-demo-flow" id=channelFlow>
+<div class="site-demo-flow" id=blogFlow>
     {{ range $k,$v := .blogs}}
         {{ if  eq "0" $v.format }}
             {{template "blog/img.html" .}}
@@ -23,8 +23,8 @@ layui.use('flow', function(){
   var flow = layui.flow;
   // 按屏加载图片
   flow.lazyimg({
-    elem: '#channelFlow img'
-    ,scrollElem: '#channelFlow' //一般不用设置，此处只是演示需要。
+    elem: '#blogFlow img'
+    ,scrollElem: '#blogFlow' //一般不用设置，此处只是演示需要。
   });
   
 });

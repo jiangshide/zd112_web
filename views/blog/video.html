@@ -1,6 +1,6 @@
-<div class="content layui-row" style="margin-bottom: 30px;">
+<div class="content layui-row" style="margin-bottom: 30px;background-color: #33353f;">
     <div class="layui-col-md8">
-    <video id="video" controls="controls" preload="none" autoplay="autoplay"
+    <video id="video" controls="controls" preload="none" autoplay="off"
                        poster="{{.url}}" style="margin: 0px;">
                     <source id="mp4" src="{{.url}}" type="video/mp4">
                     <p>Your user agent does not support the HTML5 Video element.</p>
@@ -15,14 +15,14 @@
             </div>
             <div class="layui-col-xs9" style="margin-top: 20px;color: white;padding-left: 15px;">
                 <div class="layui-row">
-                    <button type="button" class="layui-btn layui-btn-normal" style="margin-bottom:10px;">关注</button>
+                    <button type="button" class="layui-btn layui-btn-normal" style="margin-bottom:10px;" id="{{.id}}" onclick="follow({{.uid}},{{.id}})">{{if compare 1 .follows}}取消关注{{else}}关注{{end}}</button>
                     </br>
                     <span>{{.nick}} · <img src="/static/img/sex_man.png" style="width: 20px;height: 20px;"> . {{.ucity}}</span>
                 </div>    
             </div>
         </div>
         <div style="color: white;margin-top:25px;margin-right: 18%;">
-            <div class="layui-col-xs6">
+            <div class="layui-col-xs6"> 
             <span class="layui-badge-dot layui-bg-blue"></span>   
                 {{.nick}}的推荐
             </div>
@@ -33,9 +33,9 @@
             <div class="site-demo-flow" id=recommendFlow>
                 {{range .recommends}}
                 <div class="layui-col-xs6" style="height: 100%;padding: 5px;">    
-                    <div class="img_tips effect" style="height: 80%;background-color: #353535;">
+                    <div class="img_tips effect" style="height: 80%;">
                         <div class="" style="background-color: #1296db;">
-                            <img src="{{.cover}}" alt="{{.name}}" style="height:160px;background-color: #33353f;">
+                            <img src="{{.cover}}" alt="{{.name}}" style="height:160px;">
                             <span style="padding-bottom: 20px;background-color: #1296db;"># {{.channel}}</span>
                         </div>
                         <a href="/blog?id={{.id}}">
@@ -53,6 +53,24 @@
     </div>
 </div>  
 <script>
+var $ = layui.jquery;
+function follow(uid,id){
+        var followId = document.getElementById(id);
+        $.post('{{urlfor "BlogController.AjaxFollow"}}', "uid="+uid+"&id="+id, function (out) {
+            // alert("status:"+out.msg+" | code:"+out.code+" | id:"+id+" | followId:"+followId)
+                if (out.code == 0) {
+                    // if(out.msg == 0){
+                    //     followId.innerHTML = "关注";    
+                    // }else{
+                    //     followId.innerHTML = "取消关注";  
+                    // }
+                    window.location.reload()
+                } else {
+                    layer.msg(out.msg)      
+                }
+            }, "json");
+}
+
 layui.use('flow', function(){
   var flow = layui.flow;
   // 按屏加载图片

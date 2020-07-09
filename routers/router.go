@@ -28,4 +28,9 @@ func init() {
 	beego.Router("/add", &controllers.AppController{}, "*:Add")
 
 	beego.Router("/blog",&controllers.BlogController{})
+	beego.Router("/blog/ajaxFollow", &controllers.BlogController{}, "*:AjaxFollow")
+	beego.Router("/blog/ajaxPraise", &controllers.BlogController{}, "*:AjaxPraise")
+	beego.Router("/blog/ajaxCommendAdd", &controllers.BlogController{}, "*:AjaxCommendAdd")
+	
+		
 }

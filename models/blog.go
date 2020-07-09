@@ -9,7 +9,6 @@ import ("github.com/astaxie/beego/orm"
 type Blog struct {
 	Id int64	`json:"id"`
 	Uid  int64  `json:"uid"`//用户ID
-	At string `json:"at"`//@用户
 	ChannelId int64 `json:"channelId"`//频道ID
 	PositionId int64 `json:"positionId"`//当前位置ID
 	Content string `json:"content"`//内容
@@ -71,7 +70,7 @@ var BLOG_COMMON = ",(SELECT name FROM zd_channel WHERE id=B.channel_id ) channel
 
 var BLOG_USER_TOP=",(SELECT status FROM zd_blog_top WHERE blog_id=B.id AND uid=? ) tops "
 
-var BlogSql = "SELECT B.id,B.uid,B.at,B.channel_id channelId,B.position_id positionId,B.content,B.title,B.des,B.latitude,B.longitude,B.location_type locationType,B.country,B.city,B.position,B.address,B.city_code cityCode,B.ad_code adCode,B.time_zone timeCone,B.tag,B.status,B.reason,B.official,B.url,B.cover,B.name,B.sufix,B.format,B.duration,B.width,B.height,B.size,B.rotate,B.bitrate,B.sample_rate sampleRate,B.level,B.mode,B.wave,B.lrc_zh lrcZh,B.lrc_es lrcEs,B.source,B.create_time date,UP.icon,UP.nick,UP.sex,UP.age,UP.zodiac,UP.city ucity "
+var BlogSql = "SELECT B.id,B.uid,B.channel_id channelId,B.position_id positionId,B.content,B.title,B.des,B.latitude,B.longitude,B.location_type locationType,B.country,B.city,B.position,B.address,B.city_code cityCode,B.ad_code adCode,B.time_zone timeCone,B.tag,B.status,B.reason,B.official,B.url,B.cover,B.name,B.sufix,B.format,B.duration,B.width,B.height,B.size,B.rotate,B.bitrate,B.sample_rate sampleRate,B.level,B.mode,B.wave,B.lrc_zh lrcZh,B.lrc_es lrcEs,B.source,B.create_time date,UP.icon,UP.nick,UP.sex,UP.age,UP.zodiac,UP.city ucity "
 
 var BLOG_SORT_DATE ="ORDER BY B.create_time DESC LIMIT ? OFFSET ? "//按时间
 
@@ -123,6 +122,8 @@ func Blogs(uid int64,sql string,ids interface{})(maps *[]orm.Params,id int64,err
 		v["comments"] = comments
 		res,_,_ := Sql("SELECT id,position,size,txt_color,bg_color,scroll FROM zd_blog_style WHERE blog_id=?",[...]interface{}{v["id"]})
 		v["style"]=res
+		ats,_,_ := SqlList("SELECT A.from_id uid,P.nick FROM zd_at A LEFT JOIN zd_user_profile P ON A.from_id=P.id WHERE A.uid=? AND A.content_id=?",[...]interface{}{v["uid"],v["id"]})
+		v["ats"] = ats
 	}
 	return
 }
@@ -185,12 +186,12 @@ func (this *BlogPraise) Update() (int64, error) {
 // 	return orm.NewOrm().QueryTable(this.TableName()).Filter("id",this.Id).Filter("uid",this.Uid).Filter("blog_id",this.BlogId).One(this)
 // }
 
-func (this *BlogPraise) ReadOrCreates(uid,blogId int64,status int)(created bool, id int64, err error){
-	praise:=BlogPraise{Uid:uid,BlogId:blogId}
-	created,id,err = orm.NewOrm().ReadOrCreate(&praise,"uid","blog_id")
-	praise.Status=status
+func (this *BlogPraise) ReadOrCreates()(status int, id int64, err error){
+	praise:=BlogPraise{Uid:this.Uid,BlogId:this.BlogId}
+	_,id,err = orm.NewOrm().ReadOrCreate(&praise,"uid","blog_id")
+	praise.Status=1-praise.Status
 	id,err = praise.Update()
-	return
+	return praise.Status,id,err
 }
 
 type BlogRecommend struct {
