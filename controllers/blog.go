@@ -3,7 +3,7 @@ package controllers
 import(
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"zd112_web/models"
+	"sanskrit_web/models"
 	// "strconv"
 	"github.com/jiangshide/GoComm/utils"
 )

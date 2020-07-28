@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"zd112_web/controllers"
+	"sanskrit_web/controllers"
 	"github.com/astaxie/beego"
 )
 

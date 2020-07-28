@@ -4,7 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"strings"
 	"github.com/gwpp/tinify-go/tinify"
-	"zd112_web/models"
+	"sanskrit_web/models"
 	"fmt"
 	"github.com/jiangshide/GoComm/utils"
 	"strconv"
@@ -351,7 +351,7 @@ func (this *BaseController) banner() {
 	uid := this.userId
 	maps,id,err := models.Channels(uid,models.CHANNEL_OFFICIAL,[...]interface{}{uid,uid,uid,uid,20,0})
 	if err != nil || id==0{			
-		this.showTips("data is null")		
+		// this.showTips("data is null")		
 	}else{
 		this.Data["banner"] = maps
 	}
@@ -360,8 +360,10 @@ func (this *BaseController) banner() {
 func (this *BaseController) qrImg() {
 	app := new(models.App)
 	res,_ := app.List(1,0)
-	beego.Info("app:",app)
+	if len(res) > 0{
+		beego.Info("app:",app)
 	this.Data["android"] = res[0].Qr
+	}
 }
 
 type Nav struct {

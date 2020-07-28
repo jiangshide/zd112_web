@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"zd112_web/models"
+	"sanskrit_web/models"
 	"github.com/astaxie/beego"
 )
 
